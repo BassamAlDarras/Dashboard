@@ -2810,14 +2810,218 @@ function GroupedDataTable({
 // ============================================
 type GroupViewStyle = 'tree' | 'treemap' | 'cards' | 'list' | 'data';
 
+// Type for nested group data (multi-level grouping)
+interface NestedPermitGroupData {
+  name: string;
+  shortName: string;
+  count: number;
+  permits: Permit[];
+  percentage: number;
+  color: string;
+  slaMetrics: ReturnType<typeof calculateSLAMetrics>;
+  stats: ReturnType<typeof calculateGroupStats>;
+  children?: NestedPermitGroupData[];
+  level: number;
+  path: string[];
+}
+
+// Helper to get field value from permit
+const getPermitFieldValue = (permit: Permit, dimension: DrillDownOption['type']): string => {
+  switch (dimension) {
+    case 'serviceType': return permit.serviceType;
+    case 'status': return permit.currentStatus;
+    case 'owner': return permit.owner;
+    case 'zone': return permit.zone;
+    case 'priority': return permit.priority;
+    default: return '';
+  }
+};
+
+// Recursive Tree Node Component for Multi-Level Grouping (Permits)
+interface NestedPermitTreeNodeProps {
+  group: NestedPermitGroupData;
+  expandedGroups: Set<string>;
+  toggleGroup: (name: string) => void;
+  typeLabels: Record<string, string>;
+  groupByLevels: NonNullable<import('@/types').DrillDownState['groupByLevels']>;
+  navigateDrillDown: (type: DrillDownOption['type'], value: string) => void;
+  openPermitModal: (permit: Permit) => void;
+}
+
+function NestedPermitTreeNode({ group, expandedGroups, toggleGroup, typeLabels, groupByLevels, navigateDrillDown, openPermitModal }: NestedPermitTreeNodeProps) {
+  const pathKey = group.path.join('/');
+  const isExpanded = expandedGroups.has(pathKey);
+  const hasChildren = group.children && group.children.length > 0;
+  const currentLevelType = groupByLevels[group.level];
+  const isLastLevel = group.level === groupByLevels.length - 1;
+  
+  // Indentation based on level
+  const paddingLeft = group.level * 24;
+  
+  // Different background shades for different levels
+  const levelBgColors = [
+    'bg-white dark:bg-slate-800',
+    'bg-gray-50 dark:bg-slate-800/80',
+    'bg-gray-100/50 dark:bg-slate-800/60',
+    'bg-gray-100 dark:bg-slate-800/40',
+  ];
+  const bgColor = levelBgColors[Math.min(group.level, levelBgColors.length - 1)];
+  const slaRate = 100 - group.slaMetrics.breachRate;
+
+  return (
+    <div className={`border border-gray-100 dark:border-slate-700 rounded-xl overflow-hidden ${bgColor}`}>
+      <button 
+        onClick={() => toggleGroup(pathKey)} 
+        className="w-full flex items-center gap-3 p-4 hover:bg-gray-50 dark:hover:bg-slate-700/50 transition-colors"
+        style={{ paddingLeft: `${paddingLeft + 16}px` }}
+      >
+        {/* Level indicator */}
+        <span className="w-5 h-5 flex items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs font-semibold flex-shrink-0">
+          {group.level + 1}
+        </span>
+        
+        {/* Expand/collapse icon */}
+        {(hasChildren || !isLastLevel) ? (
+          isExpanded ? <ChevronDown className="w-5 h-5 text-gray-400" /> : <ChevronUp className="w-5 h-5 text-gray-400 rotate-180" />
+        ) : (
+          <div className="w-5" />
+        )}
+        
+        <div className="w-4 h-4 rounded-full flex-shrink-0" style={{ backgroundColor: group.color }} />
+        
+        <div className="flex-1 text-left">
+          <span className="font-medium text-gray-900 dark:text-white">{group.name}</span>
+          <span className="ml-2 text-xs text-gray-400 dark:text-gray-500">({typeLabels[currentLevelType]})</span>
+        </div>
+        
+        <span className="text-sm text-gray-500 dark:text-gray-400">{group.count} permits</span>
+        
+        <div className="flex items-center gap-2 ml-4">
+          <div className="w-20 h-2 bg-gray-200 dark:bg-slate-600 rounded-full overflow-hidden">
+            <div 
+              className="h-full rounded-full" 
+              style={{ 
+                width: `${slaRate}%`, 
+                backgroundColor: slaRate >= 80 ? '#22C55E' : slaRate >= 50 ? '#F59E0B' : '#EF4444'
+              }} 
+            />
+          </div>
+          <span className="text-xs text-gray-500 dark:text-gray-400 w-12">{slaRate}% SLA</span>
+        </div>
+        
+        <button 
+          onClick={(e) => { 
+            e.stopPropagation(); 
+            navigateDrillDown(currentLevelType, group.name); 
+          }} 
+          className="p-2 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/30 text-gray-400 hover:text-blue-600"
+        >
+          <ArrowRight className="w-4 h-4" />
+        </button>
+      </button>
+      
+      {/* Expanded content */}
+      {isExpanded && (
+        <div className="pb-2" style={{ paddingLeft: `${paddingLeft + 16}px` }}>
+          {/* Render child groups if available */}
+          {hasChildren && (
+            <div className="space-y-2 pt-2">
+              {group.children!.map((child) => (
+                <NestedPermitTreeNode
+                  key={child.path.join('/')}
+                  group={child}
+                  expandedGroups={expandedGroups}
+                  toggleGroup={toggleGroup}
+                  typeLabels={typeLabels}
+                  groupByLevels={groupByLevels}
+                  navigateDrillDown={navigateDrillDown}
+                  openPermitModal={openPermitModal}
+                />
+              ))}
+            </div>
+          )}
+          
+          {/* Show permits at last level */}
+          {isLastLevel && (
+            <div className="pr-4 pt-2">
+              <div className="bg-gray-50 dark:bg-slate-900/50 rounded-lg overflow-hidden">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-gray-200 dark:border-slate-700">
+                      <th className="text-left p-3 font-medium text-gray-500 dark:text-gray-400">Request #</th>
+                      <th className="text-left p-3 font-medium text-gray-500 dark:text-gray-400">Service</th>
+                      <th className="text-left p-3 font-medium text-gray-500 dark:text-gray-400">Status</th>
+                      <th className="text-left p-3 font-medium text-gray-500 dark:text-gray-400">Owner</th>
+                      <th className="text-left p-3 font-medium text-gray-500 dark:text-gray-400">Priority</th>
+                      <th className="text-right p-3 font-medium text-gray-500 dark:text-gray-400">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {group.permits.slice(0, 5).map(permit => (
+                      <tr key={permit.id} className="border-b border-gray-100 dark:border-slate-800 last:border-0">
+                        <td className="p-3 font-mono text-gray-900 dark:text-white">{permit.requestNo}</td>
+                        <td className="p-3 text-gray-600 dark:text-gray-400">{getShortServiceType(permit.serviceType)}</td>
+                        <td className="p-3">
+                          <span 
+                            className="px-2 py-1 rounded-full text-xs font-medium" 
+                            style={{ backgroundColor: `${getStatusColor(permit.currentStatus)}20`, color: getStatusColor(permit.currentStatus) }}
+                          >
+                            {permit.currentStatus}
+                          </span>
+                        </td>
+                        <td className="p-3 text-gray-600 dark:text-gray-400">{permit.owner}</td>
+                        <td className="p-3">
+                          <span 
+                            className="px-2 py-1 rounded-full text-xs font-medium" 
+                            style={{ backgroundColor: `${getPriorityColor(permit.priority)}20`, color: getPriorityColor(permit.priority) }}
+                          >
+                            {permit.priority}
+                          </span>
+                        </td>
+                        <td className="p-3 text-right">
+                          <button 
+                            onClick={() => openPermitModal(permit)} 
+                            className="text-blue-600 hover:text-blue-700 dark:text-blue-400 text-xs font-medium"
+                          >
+                            View
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                {group.permits.length > 5 && (
+                  <p className="text-center text-xs text-gray-500 dark:text-gray-400 py-2">
+                    +{group.permits.length - 5} more
+                  </p>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function MultiLevelGroupView({ mode }: { mode: DrillDownMode }) {
   const { drillDown, navigateDrillDown, getFilteredByDrillDown, openPermitModal } = useDashboard();
   const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set());
   const [groupChartTypes, setGroupChartTypes] = useState<Record<string, ChartType>>({});
   const [viewStyle, setViewStyle] = useState<GroupViewStyle>('tree');
+  const [sortBy, setSortBy] = useState<'count' | 'name' | 'sla'>('count');
 
-  // Get current grouping dimension from the last _group_ entry
+  // Check if we're using multi-level grouping from groupByLevels
+  const groupByLevels = drillDown.groupByLevels || [];
+  const isMultiLevel = groupByLevels.length > 1;
+
+  // Get current grouping dimension from the last _group_ entry (fallback for single-level)
   const currentGroupDimension = useMemo(() => {
+    // If we have groupByLevels, use the first one
+    if (groupByLevels.length > 0) {
+      return groupByLevels[0];
+    }
+    // Fallback to breadcrumb-based detection
     for (let i = drillDown.breadcrumb.length - 1; i >= 0; i--) {
       const item = drillDown.breadcrumb[i];
       if (item.value?.startsWith('_group_')) {
@@ -2825,18 +3029,22 @@ function MultiLevelGroupView({ mode }: { mode: DrillDownMode }) {
       }
     }
     return 'status' as DrillDownOption['type'];
-  }, [drillDown.breadcrumb]);
+  }, [drillDown.breadcrumb, groupByLevels]);
 
   // Get dimensions already used for grouping
   const usedDimensions = useMemo(() => {
     const used = new Set<string>();
-    drillDown.breadcrumb.forEach(item => {
-      if (item.value?.startsWith('_group_')) {
-        used.add(item.value.replace('_group_', ''));
-      }
-    });
+    if (groupByLevels.length > 0) {
+      groupByLevels.forEach(level => used.add(level));
+    } else {
+      drillDown.breadcrumb.forEach(item => {
+        if (item.value?.startsWith('_group_')) {
+          used.add(item.value.replace('_group_', ''));
+        }
+      });
+    }
     return used;
-  }, [drillDown.breadcrumb]);
+  }, [drillDown.breadcrumb, groupByLevels]);
 
   // Available dimensions for next level grouping
   const availableDimensions = useMemo(() => {
@@ -2856,7 +3064,63 @@ function MultiLevelGroupView({ mode }: { mode: DrillDownMode }) {
     }
   };
 
-  // Group permits by current dimension
+  // Build nested group data for multi-level grouping
+  const buildNestedGroups = useCallback((
+    data: Permit[],
+    levels: typeof groupByLevels,
+    currentLevel: number = 0,
+    path: string[] = [],
+    totalCount: number = data.length
+  ): NestedPermitGroupData[] => {
+    if (currentLevel >= levels.length || data.length === 0) return [];
+    
+    const levelType = levels[currentLevel];
+    const groups: Record<string, Permit[]> = {};
+    
+    data.forEach(p => {
+      const val = getPermitFieldValue(p, levelType);
+      if (!groups[val]) groups[val] = [];
+      groups[val].push(p);
+    });
+
+    return Object.entries(groups).map(([name, items], index) => {
+      const newPath = [...path, name];
+      const slaMetrics = calculateSLAMetrics(items);
+      const stats = calculateGroupStats(items, levelType, name);
+      
+      return {
+        name,
+        shortName: levelType === 'serviceType' ? getShortServiceType(name) : (name.length > 15 ? name.substring(0, 15) + '...' : name),
+        count: items.length,
+        permits: items,
+        percentage: Math.round((items.length / totalCount) * 100),
+        color: levelType === 'status' 
+          ? getStatusColor(name) 
+          : levelType === 'priority' 
+            ? getPriorityColor(name) 
+            : CHART_COLORS.serviceTypes[index % CHART_COLORS.serviceTypes.length],
+        slaMetrics,
+        stats,
+        children: currentLevel < levels.length - 1 
+          ? buildNestedGroups(items, levels, currentLevel + 1, newPath, totalCount)
+          : undefined,
+        level: currentLevel,
+        path: newPath,
+      };
+    }).sort((a, b) => {
+      if (sortBy === 'count') return b.count - a.count;
+      if (sortBy === 'name') return a.name.localeCompare(b.name);
+      return (100 - b.slaMetrics.breachRate) - (100 - a.slaMetrics.breachRate);
+    });
+  }, [sortBy]);
+
+  // Multi-level nested group data
+  const nestedGroupData = useMemo(() => {
+    if (!isMultiLevel) return [];
+    return buildNestedGroups(permits, groupByLevels);
+  }, [permits, groupByLevels, isMultiLevel, buildNestedGroups]);
+
+  // Group permits by current dimension (single-level)
   const groupedData = useMemo(() => {
     const groups: Record<string, Permit[]> = {};
     permits.forEach(permit => {
@@ -2967,7 +3231,10 @@ function MultiLevelGroupView({ mode }: { mode: DrillDownMode }) {
             <div className="flex items-center gap-2 px-3 py-2 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
               <Layers className="w-4 h-4 text-blue-600 dark:text-blue-400" />
               <span className="text-sm font-medium text-blue-700 dark:text-blue-300">
-                Grouped by {typeLabels[currentGroupDimension]}
+                {isMultiLevel 
+                  ? `Multi-Level: ${groupByLevels.map(l => typeLabels[l]).join(' → ')}`
+                  : `Grouped by ${typeLabels[currentGroupDimension]}`
+                }
               </span>
             </div>
             
@@ -2975,36 +3242,56 @@ function MultiLevelGroupView({ mode }: { mode: DrillDownMode }) {
             <div className="hidden sm:flex items-center gap-3 text-sm">
               <span className="text-gray-500">{permits.length} permits</span>
               <span className="text-gray-300 dark:text-slate-600">|</span>
-              <span className="text-gray-500">{groupedData.length} groups</span>
+              <span className="text-gray-500">
+                {isMultiLevel ? nestedGroupData.length : groupedData.length} groups
+              </span>
               <span className="text-gray-300 dark:text-slate-600">|</span>
-              <span className="text-gray-500">{usedDimensions.size} level{usedDimensions.size !== 1 ? 's' : ''}</span>
+              <span className="text-gray-500">
+                {isMultiLevel ? groupByLevels.length : usedDimensions.size} level{(isMultiLevel ? groupByLevels.length : usedDimensions.size) !== 1 ? 's' : ''}
+              </span>
             </div>
           </div>
 
-          {/* Right: View style selector */}
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-gray-500 mr-1">View:</span>
-            <div className="flex items-center gap-1 p-1 bg-gray-100 dark:bg-slate-700 rounded-lg">
-              {viewStyleOptions.map(opt => (
-                <button
-                  key={opt.id}
-                  onClick={() => setViewStyle(opt.id)}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
-                    viewStyle === opt.id
-                      ? 'bg-white dark:bg-slate-600 text-blue-600 dark:text-blue-400 shadow-sm'
-                      : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'
-                  }`}
+          {/* Right: View style selector + Sort */}
+          <div className="flex items-center gap-4">
+            {isMultiLevel && (
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-gray-500">Sort:</span>
+                <select 
+                  value={sortBy} 
+                  onChange={(e) => setSortBy(e.target.value as 'count' | 'name' | 'sla')}
+                  className="text-xs border border-gray-200 dark:border-slate-600 rounded-lg px-2 py-1 bg-white dark:bg-slate-700 text-gray-700 dark:text-gray-300"
                 >
-                  {opt.icon}
-                  <span className="hidden md:inline">{opt.label}</span>
-                </button>
-              ))}
+                  <option value="count">Count</option>
+                  <option value="name">Name</option>
+                  <option value="sla">SLA %</option>
+                </select>
+              </div>
+            )}
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-gray-500 mr-1">View:</span>
+              <div className="flex items-center gap-1 p-1 bg-gray-100 dark:bg-slate-700 rounded-lg">
+                {viewStyleOptions.map(opt => (
+                  <button
+                    key={opt.id}
+                    onClick={() => setViewStyle(opt.id)}
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
+                      viewStyle === opt.id
+                        ? 'bg-white dark:bg-slate-600 text-blue-600 dark:text-blue-400 shadow-sm'
+                        : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'
+                    }`}
+                  >
+                    {opt.icon}
+                    <span className="hidden md:inline">{opt.label}</span>
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Add Dimension buttons */}
-        {availableDimensions.length > 0 && (
+        {/* Add Dimension buttons - only for single-level mode */}
+        {!isMultiLevel && availableDimensions.length > 0 && (
           <div className="mt-4 pt-4 border-t border-gray-100 dark:border-slate-700">
             <div className="flex items-center gap-2 flex-wrap">
               <span className="text-xs text-gray-500">Add group level:</span>
@@ -3049,7 +3336,28 @@ function MultiLevelGroupView({ mode }: { mode: DrillDownMode }) {
         />
       )}
 
-      {viewStyle === 'tree' && (
+      {/* Tree View - Multi-Level */}
+      {viewStyle === 'tree' && isMultiLevel && (
+        <div className="bg-white dark:bg-slate-800 rounded-xl border border-gray-200 dark:border-slate-700 p-4">
+          <div className="space-y-2">
+            {nestedGroupData.map((group) => (
+              <NestedPermitTreeNode
+                key={group.path.join('/')}
+                group={group}
+                expandedGroups={expandedGroups}
+                toggleGroup={toggleGroup}
+                typeLabels={typeLabels}
+                groupByLevels={groupByLevels}
+                navigateDrillDown={navigateDrillDown}
+                openPermitModal={openPermitModal}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Tree View - Single Level */}
+      {viewStyle === 'tree' && !isMultiLevel && (
         <DecompositionTree 
           data={groupedData}
           dimension={currentGroupDimension}

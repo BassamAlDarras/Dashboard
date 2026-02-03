@@ -1,14 +1,18 @@
 'use client';
 
-import { useState } from 'react';
-import { Search, Filter, X, RotateCcw, ChevronDown, ChevronUp } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Search, Filter, X, RotateCcw, ChevronDown, ChevronUp, Layers, ClipboardCheck, Users, MapPin, AlertTriangle, TrendingUp, FolderTree, GripVertical, Plus, Trash2, ArrowUp, ArrowDown, ArrowRight } from 'lucide-react';
 import { useInspection } from '@/context/InspectionContext';
 import { cn } from '@/lib/utils';
+import { InspectionDrillDownState } from '@/types';
+
+type GroupByLevel = NonNullable<InspectionDrillDownState['groupByLevels']>[number];
 
 export default function InspectionFilters({ isVertical = false }: { isVertical?: boolean }) {
-  const { filters, updateFilter, resetFilters, lookups } = useInspection();
+  const { filters, updateFilter, resetFilters, lookups, navigateDrillDown, drillDown, setGroupByLevels, clearGroupByLevels } = useInspection();
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
+    groupBy: true,
     inspectionType: true,
     status: true,
     inspector: true,
@@ -17,6 +21,69 @@ export default function InspectionFilters({ isVertical = false }: { isVertical?:
     category: false,
     slaStatus: false,
   });
+  const [selectedGroupLevels, setSelectedGroupLevels] = useState<GroupByLevel[]>([]);
+  
+  // Sync with context
+  useEffect(() => {
+    if (drillDown.groupByLevels && drillDown.groupByLevels.length > 0) {
+      setSelectedGroupLevels(drillDown.groupByLevels);
+    }
+  }, [drillDown.groupByLevels]);
+
+  const groupByOptions: { id: GroupByLevel; label: string; icon: React.ReactNode }[] = [
+    { id: 'inspectionType', label: 'Inspection Type', icon: <ClipboardCheck className="w-3.5 h-3.5" /> },
+    { id: 'status', label: 'Status', icon: <TrendingUp className="w-3.5 h-3.5" /> },
+    { id: 'inspector', label: 'Inspector', icon: <Users className="w-3.5 h-3.5" /> },
+    { id: 'zone', label: 'Zone', icon: <MapPin className="w-3.5 h-3.5" /> },
+    { id: 'priority', label: 'Priority', icon: <AlertTriangle className="w-3.5 h-3.5" /> },
+    { id: 'category', label: 'Category', icon: <Layers className="w-3.5 h-3.5" /> },
+  ];
+
+  const addGroupLevel = (level: GroupByLevel) => {
+    if (!selectedGroupLevels.includes(level)) {
+      const newLevels = [...selectedGroupLevels, level];
+      setSelectedGroupLevels(newLevels);
+      setGroupByLevels(newLevels);
+    }
+  };
+
+  const removeGroupLevel = (level: GroupByLevel) => {
+    const newLevels = selectedGroupLevels.filter(l => l !== level);
+    setSelectedGroupLevels(newLevels);
+    if (newLevels.length > 0) {
+      setGroupByLevels(newLevels);
+    } else {
+      clearGroupByLevels();
+    }
+  };
+
+  const moveGroupLevelByDirection = (level: GroupByLevel, direction: 'up' | 'down') => {
+    const index = selectedGroupLevels.indexOf(level);
+    if (index === -1) return;
+    const newIndex = direction === 'up' ? index - 1 : index + 1;
+    if (newIndex < 0 || newIndex >= selectedGroupLevels.length) return;
+    const newLevels = [...selectedGroupLevels];
+    [newLevels[index], newLevels[newIndex]] = [newLevels[newIndex], newLevels[index]];
+    setSelectedGroupLevels(newLevels);
+    setGroupByLevels(newLevels);
+  };
+
+  const moveGroupLevel = (fromIndex: number, toIndex: number) => {
+    const newLevels = [...selectedGroupLevels];
+    const [removed] = newLevels.splice(fromIndex, 1);
+    newLevels.splice(toIndex, 0, removed);
+    setSelectedGroupLevels(newLevels);
+    setGroupByLevels(newLevels);
+  };
+  
+  const clearAllGroupLevels = () => {
+    setSelectedGroupLevels([]);
+    clearGroupByLevels();
+  };
+  
+  const availableGroupLevels = groupByOptions.filter(
+    opt => !selectedGroupLevels.includes(opt.id)
+  );
 
   const toggleSection = (section: string) => {
     setExpandedSections(prev => ({ ...prev, [section]: !prev[section] }));
@@ -81,6 +148,197 @@ export default function InspectionFilters({ isVertical = false }: { isVertical?:
 
         {/* Filter Sections */}
         <div className="divide-y divide-gray-100 dark:divide-slate-700 max-h-[calc(100vh-300px)] overflow-y-auto">
+          {/* Visual Group By Pipeline Section */}
+          <div className="p-3 bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 dark:from-emerald-900/20 dark:via-teal-900/15 dark:to-cyan-900/10">
+            <button
+              onClick={() => toggleSection('groupBy')}
+              className="w-full flex items-center justify-between text-xs font-medium text-gray-700 dark:text-gray-300 mb-3"
+            >
+              <span className="flex items-center gap-2 text-emerald-700 dark:text-emerald-400">
+                <div className="p-1.5 rounded-lg bg-gradient-to-br from-emerald-500 to-teal-600 text-white shadow-sm">
+                  <FolderTree className="w-3 h-3" />
+                </div>
+                <span className="font-semibold">Data Pipeline</span>
+                {selectedGroupLevels.length > 0 && (
+                  <span className="px-2 py-0.5 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-full text-[10px] font-bold shadow-sm">
+                    {selectedGroupLevels.length} {selectedGroupLevels.length === 1 ? 'level' : 'levels'}
+                  </span>
+                )}
+              </span>
+              {expandedSections.groupBy ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+            </button>
+            
+            {expandedSections.groupBy && (
+              <div className="space-y-3">
+                {/* Visual Pipeline Flow */}
+                {selectedGroupLevels.length > 0 ? (
+                  <div className="relative">
+                    {/* Pipeline Container */}
+                    <div className="relative bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-xl p-3 border border-emerald-200/50 dark:border-emerald-700/30 shadow-inner">
+                      {/* Flow Header */}
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                          <span className="text-[10px] font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Active Flow</span>
+                        </div>
+                        <button
+                          onClick={clearAllGroupLevels}
+                          className="flex items-center gap-1 px-2 py-1 text-[10px] font-medium text-red-500 hover:text-white hover:bg-red-500 rounded-md transition-all duration-200"
+                        >
+                          <X className="w-2.5 h-2.5" />
+                          Reset
+                        </button>
+                      </div>
+                      
+                      {/* Visual Pipeline Nodes */}
+                      <div className="flex flex-col gap-0">
+                        {selectedGroupLevels.map((levelId, index) => {
+                          const option = groupByOptions.find(o => o.id === levelId);
+                          if (!option) return null;
+                          
+                          const colors = [
+                            { bg: 'from-emerald-500 to-teal-500', light: 'bg-emerald-50 dark:bg-emerald-900/20', border: 'border-emerald-200 dark:border-emerald-700', text: 'text-emerald-600 dark:text-emerald-400' },
+                            { bg: 'from-cyan-500 to-blue-500', light: 'bg-cyan-50 dark:bg-cyan-900/20', border: 'border-cyan-200 dark:border-cyan-700', text: 'text-cyan-600 dark:text-cyan-400' },
+                            { bg: 'from-violet-500 to-purple-500', light: 'bg-violet-50 dark:bg-violet-900/20', border: 'border-violet-200 dark:border-violet-700', text: 'text-violet-600 dark:text-violet-400' },
+                            { bg: 'from-amber-500 to-orange-500', light: 'bg-amber-50 dark:bg-amber-900/20', border: 'border-amber-200 dark:border-amber-700', text: 'text-amber-600 dark:text-amber-400' },
+                            { bg: 'from-rose-500 to-pink-500', light: 'bg-rose-50 dark:bg-rose-900/20', border: 'border-rose-200 dark:border-rose-700', text: 'text-rose-600 dark:text-rose-400' },
+                            { bg: 'from-indigo-500 to-blue-500', light: 'bg-indigo-50 dark:bg-indigo-900/20', border: 'border-indigo-200 dark:border-indigo-700', text: 'text-indigo-600 dark:text-indigo-400' },
+                          ];
+                          const color = colors[index % colors.length];
+                          
+                          return (
+                            <div key={levelId} className="relative group">
+                              {/* Connector Line */}
+                              {index > 0 && (
+                                <div className="absolute left-5 -top-2 w-0.5 h-4 bg-gradient-to-b from-gray-300 to-gray-200 dark:from-slate-600 dark:to-slate-700" />
+                              )}
+                              
+                              {/* Pipeline Node */}
+                              <div className={`relative flex items-center gap-2 p-2 rounded-xl ${color.light} ${color.border} border transition-all duration-200 hover:shadow-md`}>
+                                {/* Level Badge */}
+                                <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${color.bg} flex items-center justify-center text-white font-bold text-sm shadow-sm`}>
+                                  {index + 1}
+                                </div>
+                                
+                                {/* Node Content */}
+                                <div className="flex-1 min-w-0">
+                                  <div className="flex items-center gap-1.5">
+                                    <span className={color.text}>{option.icon}</span>
+                                    <span className={`text-xs font-semibold ${color.text}`}>{option.label}</span>
+                                  </div>
+                                  <span className="text-[9px] text-gray-400 dark:text-gray-500">
+                                    {index === 0 ? 'Primary grouping' : index === 1 ? 'Sub-grouping' : `Level ${index + 1} breakdown`}
+                                  </span>
+                                </div>
+                                
+                                {/* Controls */}
+                                <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                  <button
+                                    onClick={() => moveGroupLevelByDirection(levelId, 'up')}
+                                    disabled={index === 0}
+                                    className="p-1 rounded-md hover:bg-white dark:hover:bg-slate-700 disabled:opacity-30 transition-colors"
+                                    title="Move up"
+                                  >
+                                    <ArrowUp className="w-3.5 h-3.5 text-gray-500" />
+                                  </button>
+                                  <button
+                                    onClick={() => moveGroupLevelByDirection(levelId, 'down')}
+                                    disabled={index === selectedGroupLevels.length - 1}
+                                    className="p-1 rounded-md hover:bg-white dark:hover:bg-slate-700 disabled:opacity-30 transition-colors"
+                                    title="Move down"
+                                  >
+                                    <ArrowDown className="w-3.5 h-3.5 text-gray-500" />
+                                  </button>
+                                  <button
+                                    onClick={() => removeGroupLevel(levelId)}
+                                    className="p-1 rounded-md hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors"
+                                    title="Remove"
+                                  >
+                                    <Trash2 className="w-3.5 h-3.5 text-red-500" />
+                                  </button>
+                                </div>
+                              </div>
+                              
+                              {/* Flow Arrow */}
+                              {index < selectedGroupLevels.length - 1 && (
+                                <div className="flex justify-center py-1">
+                                  <div className="flex flex-col items-center">
+                                    <div className="w-0.5 h-2 bg-gradient-to-b from-gray-300 to-transparent dark:from-slate-600" />
+                                    <ChevronDown className="w-3 h-3 text-gray-400 dark:text-slate-500 -mt-1" />
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+                      
+                      {/* Result Preview */}
+                      <div className="mt-3 pt-3 border-t border-dashed border-gray-200 dark:border-slate-700">
+                        <div className="flex items-center gap-2 text-[10px] text-gray-500 dark:text-gray-400">
+                          <span className="font-medium">Result:</span>
+                          <div className="flex items-center gap-1 flex-wrap">
+                            {selectedGroupLevels.map((l, i) => (
+                              <span key={l} className="flex items-center gap-1">
+                                <span className="px-1.5 py-0.5 bg-gray-100 dark:bg-slate-700 rounded text-[9px] font-medium">
+                                  {groupByOptions.find(o => o.id === l)?.label}
+                                </span>
+                                {i < selectedGroupLevels.length - 1 && (
+                                  <ArrowRight className="w-2.5 h-2.5 text-gray-400" />
+                                )}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  /* Empty State - Dimension Picker */
+                  <div className="bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-xl p-3 border-2 border-dashed border-emerald-200 dark:border-emerald-800/50">
+                    <p className="text-[10px] text-gray-500 dark:text-gray-400 text-center mb-3">
+                      Build your data pipeline by adding dimensions
+                    </p>
+                  </div>
+                )}
+                
+                {/* Available Dimensions - Visual Cards */}
+                {availableGroupLevels.length > 0 && (
+                  <div className="space-y-2">
+                    <span className="text-[10px] font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider flex items-center gap-1.5">
+                      <Plus className="w-3 h-3" />
+                      {selectedGroupLevels.length > 0 ? 'Add another level' : 'Start with a dimension'}
+                    </span>
+                    <div className="grid grid-cols-2 gap-1.5">
+                      {availableGroupLevels.map((option, idx) => {
+                        const hoverColors = [
+                          'hover:border-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/20',
+                          'hover:border-cyan-400 hover:bg-cyan-50 dark:hover:bg-cyan-900/20',
+                          'hover:border-violet-400 hover:bg-violet-50 dark:hover:bg-violet-900/20',
+                          'hover:border-amber-400 hover:bg-amber-50 dark:hover:bg-amber-900/20',
+                          'hover:border-rose-400 hover:bg-rose-50 dark:hover:bg-rose-900/20',
+                          'hover:border-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/20',
+                        ];
+                        return (
+                          <button
+                            key={option.id}
+                            onClick={() => addGroupLevel(option.id)}
+                            className={`flex items-center gap-2 p-2 rounded-lg border border-gray-200 dark:border-slate-700 bg-white/50 dark:bg-slate-800/50 text-xs transition-all duration-200 ${hoverColors[(selectedGroupLevels.length + idx) % hoverColors.length]} hover:shadow-sm group`}
+                          >
+                            <span className="text-gray-400 dark:text-gray-500 group-hover:scale-110 transition-transform">
+                              {option.icon}
+                            </span>
+                            <span className="text-gray-600 dark:text-gray-400 font-medium truncate">{option.label}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+
           {/* Inspection Type */}
           <div className="p-3">
             <button

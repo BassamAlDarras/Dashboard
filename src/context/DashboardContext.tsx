@@ -20,6 +20,8 @@ interface DashboardContextType {
   openPermitModal: (permit: Permit) => void;
   closePermitModal: () => void;
   getFilteredByDrillDown: () => Permit[];
+  setGroupByLevels: (levels: NonNullable<DrillDownState['groupByLevels']>) => void;
+  clearGroupByLevels: () => void;
 }
 
 const initialFilters: FilterState = {
@@ -36,6 +38,7 @@ const initialDrillDown: DrillDownState = {
   type: null,
   value: null,
   breadcrumb: [{ label: 'Overview', type: null, value: null }],
+  groupByLevels: [],
 };
 
 const DashboardContext = createContext<DashboardContextType | undefined>(undefined);
@@ -105,6 +108,29 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
     setDrillDown(initialDrillDown);
   }, []);
 
+  const setGroupByLevels = useCallback((levels: NonNullable<DrillDownState['groupByLevels']>) => {
+    setDrillDown(prev => {
+      if (levels.length === 0) {
+        return initialDrillDown;
+      }
+      const firstLevel = levels[0];
+      return {
+        level: 1,
+        type: firstLevel,
+        value: `_group_${firstLevel}`,
+        breadcrumb: [
+          { label: 'Overview', type: null, value: null },
+          { label: `By ${firstLevel}`, type: firstLevel, value: `_group_${firstLevel}` },
+        ],
+        groupByLevels: levels,
+      };
+    });
+  }, []);
+
+  const clearGroupByLevels = useCallback(() => {
+    setDrillDown(initialDrillDown);
+  }, []);
+
   const getFilteredByDrillDown = useCallback((): Permit[] => {
     let data = filteredPermits;
     
@@ -159,6 +185,8 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
         openPermitModal,
         closePermitModal,
         getFilteredByDrillDown,
+        setGroupByLevels,
+        clearGroupByLevels,
       }}
     >
       {children}

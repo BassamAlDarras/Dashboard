@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useCallback } from 'react';
 import { 
   ArrowRight, ClipboardCheck, Users, MapPin, AlertTriangle, Layers,
   Grid3X3, PieChartIcon, Eye, ChevronLeft, ChevronRight, ChevronDown, ChevronUp,
@@ -9,7 +9,7 @@ import {
   LayoutGrid, List,
 } from 'lucide-react';
 import { useInspection } from '@/context/InspectionContext';
-import { Inspection } from '@/types';
+import { Inspection, InspectionDrillDownState } from '@/types';
 import { 
   PieChart, Pie, Cell, ResponsiveContainer, Tooltip, BarChart, Bar, XAxis, YAxis,
   CartesianGrid, LineChart, Line, AreaChart, Area, RadialBarChart, RadialBar,
@@ -235,6 +235,204 @@ function OverviewLevel() {
   );
 }
 
+// Helper to get field value from inspection
+const getInspectionFieldValue = (inspection: Inspection, fieldType: string): string => {
+  switch (fieldType) {
+    case 'inspectionType': return inspection.inspectionType;
+    case 'status': return inspection.status;
+    case 'inspector': return inspection.inspector;
+    case 'zone': return inspection.zone;
+    case 'priority': return inspection.priority;
+    case 'category': return inspection.category;
+    default: return '';
+  }
+};
+
+// Type for nested group data
+interface NestedGroupData {
+  name: string;
+  shortName: string;
+  count: number;
+  items: Inspection[];
+  percentage: number;
+  color: string;
+  slaCompliance: number;
+  avgScore: number;
+  completionRate: number;
+  children?: NestedGroupData[];
+  level: number;
+  path: string[];
+}
+
+// Recursive Tree Node Component for Multi-Level Grouping
+interface NestedTreeNodeProps {
+  group: NestedGroupData;
+  expandedGroups: Set<string>;
+  toggleGroup: (name: string) => void;
+  typeLabels: Record<string, string>;
+  groupByLevels: NonNullable<InspectionDrillDownState['groupByLevels']>;
+  navigateDrillDown: (type: InspectionDrillDownState['type'], value: string) => void;
+  openInspectionModal: (inspection: Inspection) => void;
+}
+
+function NestedTreeNode({ group, expandedGroups, toggleGroup, typeLabels, groupByLevels, navigateDrillDown, openInspectionModal }: NestedTreeNodeProps) {
+  const pathKey = group.path.join('/');
+  const isExpanded = expandedGroups.has(pathKey);
+  const hasChildren = group.children && group.children.length > 0;
+  const currentLevelType = groupByLevels[group.level];
+  const isLastLevel = group.level === groupByLevels.length - 1;
+  
+  // Indentation based on level
+  const paddingLeft = group.level * 24;
+  
+  // Different background shades for different levels
+  const levelBgColors = [
+    'bg-white dark:bg-slate-800',
+    'bg-gray-50 dark:bg-slate-800/80',
+    'bg-gray-100/50 dark:bg-slate-800/60',
+    'bg-gray-100 dark:bg-slate-800/40',
+  ];
+  const bgColor = levelBgColors[Math.min(group.level, levelBgColors.length - 1)];
+
+  return (
+    <div className={`border border-gray-100 dark:border-slate-700 rounded-xl overflow-hidden ${bgColor}`}>
+      <button 
+        onClick={() => toggleGroup(pathKey)} 
+        className="w-full flex items-center gap-3 p-4 hover:bg-gray-50 dark:hover:bg-slate-700/50 transition-colors"
+        style={{ paddingLeft: `${paddingLeft + 16}px` }}
+      >
+        {/* Level indicator */}
+        <span className="w-5 h-5 flex items-center justify-center rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 text-xs font-semibold flex-shrink-0">
+          {group.level + 1}
+        </span>
+        
+        {/* Expand/collapse icon */}
+        {(hasChildren || !isLastLevel) ? (
+          isExpanded ? <ChevronDown className="w-5 h-5 text-gray-400" /> : <ChevronUp className="w-5 h-5 text-gray-400 rotate-180" />
+        ) : (
+          <div className="w-5" />
+        )}
+        
+        <div className="w-4 h-4 rounded-full flex-shrink-0" style={{ backgroundColor: group.color }} />
+        
+        <div className="flex-1 text-left">
+          <span className="font-medium text-gray-900 dark:text-white">{group.name}</span>
+          <span className="ml-2 text-xs text-gray-400 dark:text-gray-500">({typeLabels[currentLevelType]})</span>
+        </div>
+        
+        <span className="text-sm text-gray-500 dark:text-gray-400">{group.count} inspections</span>
+        
+        <div className="flex items-center gap-2 ml-4">
+          <div className="w-20 h-2 bg-gray-200 dark:bg-slate-600 rounded-full overflow-hidden">
+            <div 
+              className="h-full rounded-full" 
+              style={{ 
+                width: `${group.slaCompliance}%`, 
+                backgroundColor: getSLAColor(group.slaCompliance >= 80 ? 'Within SLA' : 'SLA Breached') 
+              }} 
+            />
+          </div>
+          <span className="text-xs text-gray-500 dark:text-gray-400 w-10">{group.slaCompliance}%</span>
+        </div>
+        
+        <button 
+          onClick={(e) => { 
+            e.stopPropagation(); 
+            navigateDrillDown(currentLevelType, group.name); 
+          }} 
+          className="p-2 rounded-lg hover:bg-emerald-100 dark:hover:bg-emerald-900/30 text-gray-400 hover:text-emerald-600"
+        >
+          <ArrowRight className="w-4 h-4" />
+        </button>
+      </button>
+      
+      {/* Expanded content */}
+      {isExpanded && (
+        <div className="pb-2" style={{ paddingLeft: `${paddingLeft + 16}px` }}>
+          {/* Render child groups if available */}
+          {hasChildren && (
+            <div className="space-y-2 pt-2">
+              {group.children!.map((child) => (
+                <NestedTreeNode
+                  key={child.path.join('/')}
+                  group={child}
+                  expandedGroups={expandedGroups}
+                  toggleGroup={toggleGroup}
+                  typeLabels={typeLabels}
+                  groupByLevels={groupByLevels}
+                  navigateDrillDown={navigateDrillDown}
+                  openInspectionModal={openInspectionModal}
+                />
+              ))}
+            </div>
+          )}
+          
+          {/* Show items at last level */}
+          {isLastLevel && (
+            <div className="pr-4 pt-2">
+              <div className="bg-gray-50 dark:bg-slate-900/50 rounded-lg overflow-hidden">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-gray-200 dark:border-slate-700">
+                      <th className="text-left p-3 font-medium text-gray-500 dark:text-gray-400">ID</th>
+                      <th className="text-left p-3 font-medium text-gray-500 dark:text-gray-400">Type</th>
+                      <th className="text-left p-3 font-medium text-gray-500 dark:text-gray-400">Status</th>
+                      <th className="text-left p-3 font-medium text-gray-500 dark:text-gray-400">SLA</th>
+                      <th className="text-left p-3 font-medium text-gray-500 dark:text-gray-400">Inspector</th>
+                      <th className="text-right p-3 font-medium text-gray-500 dark:text-gray-400">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {group.items.slice(0, 5).map(item => (
+                      <tr key={item.id} className="border-b border-gray-100 dark:border-slate-800 last:border-0">
+                        <td className="p-3 font-mono text-gray-900 dark:text-white">{item.id}</td>
+                        <td className="p-3 text-gray-600 dark:text-gray-400">{item.inspectionType}</td>
+                        <td className="p-3">
+                          <span 
+                            className="px-2 py-1 rounded-full text-xs font-medium" 
+                            style={{ backgroundColor: `${getStatusColor(item.status)}20`, color: getStatusColor(item.status) }}
+                          >
+                            {item.status}
+                          </span>
+                        </td>
+                        <td className="p-3">
+                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                            item.slaStatus === 'Within SLA' 
+                              ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' 
+                              : item.slaStatus === 'SLA Breached' 
+                                ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400' 
+                                : 'bg-gray-100 text-gray-600 dark:bg-slate-700 dark:text-gray-400'
+                          }`}>
+                            {item.slaStatus}
+                          </span>
+                        </td>
+                        <td className="p-3 text-gray-600 dark:text-gray-400">{item.inspector}</td>
+                        <td className="p-3 text-right">
+                          <button 
+                            onClick={() => openInspectionModal(item)} 
+                            className="text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 text-xs font-medium"
+                          >
+                            View
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                {group.items.length > 5 && (
+                  <p className="text-center text-xs text-gray-500 dark:text-gray-400 py-2">
+                    +{group.items.length - 5} more
+                  </p>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
 // Multi-Level Group View - Tree, Treemap, Cards, List, Data views
 function MultiLevelGroupView() {
   const { drillDown, navigateDrillDown, getFilteredByDrillDown, openInspectionModal } = useInspection();
@@ -246,8 +444,58 @@ function MultiLevelGroupView() {
   const pageSize = 10;
   
   const currentType = drillDown.type;
+  const groupByLevels = drillDown.groupByLevels || [];
+  const isMultiLevel = groupByLevels.length > 1;
   const inspections = getFilteredByDrillDown();
 
+  // Build nested group data for multi-level grouping
+  const buildNestedGroups = useCallback((
+    data: Inspection[],
+    levels: typeof groupByLevels,
+    currentLevel: number = 0,
+    path: string[] = [],
+    totalCount: number = data.length
+  ): NestedGroupData[] => {
+    if (currentLevel >= levels.length || data.length === 0) return [];
+    
+    const levelType = levels[currentLevel];
+    const groups: Record<string, Inspection[]> = {};
+    
+    data.forEach(i => {
+      const val = getInspectionFieldValue(i, levelType);
+      if (!groups[val]) groups[val] = [];
+      groups[val].push(i);
+    });
+
+    return Object.entries(groups).map(([name, items], index) => {
+      const slaMetrics = calculateSLAMetrics(items);
+      const performanceMetrics = calculatePerformanceMetrics(items);
+      const newPath = [...path, name];
+      
+      return {
+        name,
+        shortName: name.length > 15 ? name.substring(0, 15) + '...' : name,
+        count: items.length,
+        items,
+        percentage: Math.round((items.length / totalCount) * 100),
+        color: levelType === 'status' ? getStatusColor(name) : levelType === 'priority' ? getPriorityColor(name) : INSPECTION_COLORS.category[index % INSPECTION_COLORS.category.length],
+        slaCompliance: slaMetrics.compliance,
+        avgScore: performanceMetrics.avgScore,
+        completionRate: performanceMetrics.completionRate,
+        children: currentLevel < levels.length - 1 
+          ? buildNestedGroups(items, levels, currentLevel + 1, newPath, totalCount)
+          : undefined,
+        level: currentLevel,
+        path: newPath,
+      };
+    }).sort((a, b) => {
+      if (sortBy === 'count') return b.count - a.count;
+      if (sortBy === 'name') return a.name.localeCompare(b.name);
+      return b.slaCompliance - a.slaCompliance;
+    });
+  }, [sortBy]);
+
+  // Standard single-level grouping
   const groupData = useMemo(() => {
     const getFieldValue = (inspection: Inspection) => {
       switch (currentType) {
@@ -289,6 +537,12 @@ function MultiLevelGroupView() {
     });
   }, [inspections, currentType, sortBy]);
 
+  // Multi-level grouped data
+  const nestedGroupData = useMemo(() => {
+    if (!isMultiLevel) return [];
+    return buildNestedGroups(inspections, groupByLevels);
+  }, [inspections, groupByLevels, isMultiLevel, buildNestedGroups]);
+
   const toggleGroup = (name: string) => {
     setExpandedGroups(prev => {
       const newSet = new Set(prev);
@@ -325,10 +579,25 @@ function MultiLevelGroupView() {
       <div className="bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 rounded-xl p-4 border border-emerald-200 dark:border-emerald-800">
         <div className="flex items-center justify-between flex-wrap gap-4">
           <div className="flex items-center gap-4">
-            <p className="text-emerald-800 dark:text-emerald-200"><span className="font-semibold">{inspections.length}</span> inspections in <span className="font-semibold">{groupData.length}</span> groups</p>
+            <p className="text-emerald-800 dark:text-emerald-200">
+              <span className="font-semibold">{inspections.length}</span> inspections in{' '}
+              <span className="font-semibold">
+                {isMultiLevel ? nestedGroupData.length : groupData.length}
+              </span> groups
+              {isMultiLevel && (
+                <span className="ml-2 text-emerald-600 dark:text-emerald-400">
+                  ({groupByLevels.length} levels)
+                </span>
+              )}
+            </p>
             <div className="flex items-center gap-2 text-sm">
               <span className="text-emerald-600 dark:text-emerald-400">Avg SLA:</span>
-              <span className="font-semibold text-emerald-800 dark:text-emerald-200">{Math.round(groupData.reduce((sum, g) => sum + g.slaCompliance, 0) / groupData.length || 0)}%</span>
+              <span className="font-semibold text-emerald-800 dark:text-emerald-200">
+                {Math.round(
+                  (isMultiLevel ? nestedGroupData : groupData).reduce((sum, g) => sum + g.slaCompliance, 0) / 
+                  (isMultiLevel ? nestedGroupData : groupData).length || 0
+                )}%
+              </span>
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -347,8 +616,15 @@ function MultiLevelGroupView() {
         <div className="p-6 border-b border-gray-200 dark:border-slate-700">
           <div className="flex items-center justify-between flex-wrap gap-4">
             <div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">By {typeLabels[currentType || 'inspectionType']}</h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400">Click any group to drill deeper</p>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                {isMultiLevel 
+                  ? `Multi-Level: ${groupByLevels.map(l => typeLabels[l]).join(' → ')}`
+                  : `By ${typeLabels[currentType || 'inspectionType']}`
+                }
+              </h3>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                {isMultiLevel ? 'Expand groups to see nested hierarchy' : 'Click any group to drill deeper'}
+              </p>
             </div>
             <div className="flex items-center gap-2">
               <div className="flex items-center gap-1 p-1 bg-gray-100 dark:bg-slate-700 rounded-lg">
@@ -368,8 +644,26 @@ function MultiLevelGroupView() {
         </div>
 
         <div className="p-6">
-          {/* Tree View */}
-          {viewStyle === 'tree' && (
+          {/* Tree View - Multi-Level */}
+          {viewStyle === 'tree' && isMultiLevel && (
+            <div className="space-y-2">
+              {nestedGroupData.map((group) => (
+                <NestedTreeNode 
+                  key={group.path.join('/')} 
+                  group={group} 
+                  expandedGroups={expandedGroups} 
+                  toggleGroup={toggleGroup} 
+                  typeLabels={typeLabels}
+                  groupByLevels={groupByLevels}
+                  navigateDrillDown={navigateDrillDown}
+                  openInspectionModal={openInspectionModal}
+                />
+              ))}
+            </div>
+          )}
+
+          {/* Tree View - Single Level */}
+          {viewStyle === 'tree' && !isMultiLevel && (
             <div className="space-y-2">
               {groupData.map((group) => (
                 <div key={group.name} className="border border-gray-100 dark:border-slate-700 rounded-xl overflow-hidden">

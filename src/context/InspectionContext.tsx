@@ -21,6 +21,8 @@ interface InspectionContextType {
   closeInspectionModal: () => void;
   getFilteredByDrillDown: () => Inspection[];
   lookups: typeof inspectionsData.lookups;
+  setGroupByLevels: (levels: NonNullable<InspectionDrillDownState['groupByLevels']>) => void;
+  clearGroupByLevels: () => void;
 }
 
 const initialFilters: InspectionFilterState = {
@@ -40,6 +42,7 @@ const initialDrillDown: InspectionDrillDownState = {
   type: null,
   value: null,
   breadcrumb: [{ label: 'Overview', type: null, value: null }],
+  groupByLevels: [],
 };
 
 const InspectionContext = createContext<InspectionContextType | undefined>(undefined);
@@ -112,6 +115,29 @@ export function InspectionProvider({ children }: { children: ReactNode }) {
     setDrillDown(initialDrillDown);
   }, []);
 
+  const setGroupByLevels = useCallback((levels: NonNullable<InspectionDrillDownState['groupByLevels']>) => {
+    setDrillDown(prev => {
+      if (levels.length === 0) {
+        return initialDrillDown;
+      }
+      const firstLevel = levels[0];
+      return {
+        level: 1,
+        type: firstLevel,
+        value: `_group_${firstLevel}`,
+        breadcrumb: [
+          { label: 'Overview', type: null, value: null },
+          { label: `By ${firstLevel}`, type: firstLevel, value: `_group_${firstLevel}` },
+        ],
+        groupByLevels: levels,
+      };
+    });
+  }, []);
+
+  const clearGroupByLevels = useCallback(() => {
+    setDrillDown(initialDrillDown);
+  }, []);
+
   const getFilteredByDrillDown = useCallback((): Inspection[] => {
     let data = filteredInspections;
     
@@ -168,6 +194,8 @@ export function InspectionProvider({ children }: { children: ReactNode }) {
         closeInspectionModal,
         getFilteredByDrillDown,
         lookups: inspectionsData.lookups,
+        setGroupByLevels,
+        clearGroupByLevels,
       }}
     >
       {children}

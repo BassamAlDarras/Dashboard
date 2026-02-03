@@ -47,6 +47,7 @@ export interface DrillDownState {
   parentType?: string;
   parentValue?: string;
   breadcrumb: BreadcrumbItem[];
+  groupByLevels?: Array<'serviceType' | 'status' | 'owner' | 'zone' | 'priority'>;
 }
 
 export interface BreadcrumbItem {
@@ -108,6 +109,7 @@ export interface InspectionDrillDownState {
   type: 'inspectionType' | 'status' | 'inspector' | 'zone' | 'priority' | 'category' | null;
   value: string | null;
   breadcrumb: BreadcrumbItem[];
+  groupByLevels?: Array<'inspectionType' | 'status' | 'inspector' | 'zone' | 'priority' | 'category'>;
 }
 
 export interface InspectionFilterState {
