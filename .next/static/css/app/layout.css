@@ -810,6 +810,9 @@ video {
 .mt-6 {
   margin-top: 1.5rem;
 }
+.mb-1\.5 {
+  margin-bottom: 0.375rem;
+}
 .block {
   display: block;
 }
@@ -909,6 +912,9 @@ video {
 .h-px {
   height: 1px;
 }
+.h-80 {
+  height: 20rem;
+}
 .max-h-40 {
   max-height: 10rem;
 }
@@ -923,6 +929,12 @@ video {
 }
 .max-h-\[calc\(90vh-180px\)\] {
   max-height: calc(90vh - 180px);
+}
+.max-h-\[85vh\] {
+  max-height: 85vh;
+}
+.max-h-\[calc\(85vh-120px\)\] {
+  max-height: calc(85vh - 120px);
 }
 .min-h-full {
   min-height: 100%;
@@ -996,6 +1008,12 @@ video {
 .w-px {
   width: 1px;
 }
+.w-48 {
+  width: 12rem;
+}
+.w-16 {
+  width: 4rem;
+}
 .min-w-0 {
   min-width: 0px;
 }
@@ -1037,6 +1055,9 @@ video {
 }
 .max-w-md {
   max-width: 28rem;
+}
+.max-w-5xl {
+  max-width: 64rem;
 }
 .flex-1 {
   flex: 1 1 0%;
@@ -1229,6 +1250,9 @@ video {
 .divide-gray-200 > :not([hidden]) ~ :not([hidden]) {
   --tw-divide-opacity: 1;
   border-color: rgb(229 231 235 / var(--tw-divide-opacity, 1));
+}
+.self-stretch {
+  align-self: stretch;
 }
 .overflow-auto {
   overflow: auto;
@@ -1810,6 +1834,11 @@ video {
   --tw-gradient-to: rgb(124 58 237 / 0) var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
+.from-slate-50 {
+  --tw-gradient-from: #f8fafc var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(248 250 252 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
 .via-blue-400 {
   --tw-gradient-to: rgb(96 165 250 / 0)  var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), #60a5fa var(--tw-gradient-via-position), var(--tw-gradient-to);
@@ -2106,6 +2135,10 @@ video {
 .py-8 {
   padding-top: 2rem;
   padding-bottom: 2rem;
+}
+.py-12 {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
 }
 .pb-2 {
   padding-bottom: 0.5rem;
@@ -3077,6 +3110,12 @@ textarea:focus:is(.dark *) {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
+.hover\:scale-105:hover {
+  --tw-scale-x: 1.05;
+  --tw-scale-y: 1.05;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
 .hover\:border-amber-400:hover {
   --tw-border-opacity: 1;
   border-color: rgb(251 191 36 / var(--tw-border-opacity, 1));
@@ -3250,6 +3289,11 @@ textarea:focus:is(.dark *) {
   background-color: rgb(255 255 255 / 0.5);
 }
 
+.hover\:bg-amber-100:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 243 199 / var(--tw-bg-opacity, 1));
+}
+
 .hover\:text-amber-900:hover {
   --tw-text-opacity: 1;
   color: rgb(120 53 15 / var(--tw-text-opacity, 1));
@@ -3411,6 +3455,16 @@ textarea:focus:is(.dark *) {
   --tw-ring-color: rgb(16 185 129 / var(--tw-ring-opacity, 1));
 }
 
+.focus\:ring-indigo-500:focus {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(99 102 241 / var(--tw-ring-opacity, 1));
+}
+
+.focus\:ring-purple-500:focus {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(168 85 247 / var(--tw-ring-opacity, 1));
+}
+
 .disabled\:opacity-30:disabled {
   opacity: 0.3;
 }
@@ -3467,6 +3521,10 @@ textarea:focus:is(.dark *) {
 
 .group:hover .group-hover\:opacity-100 {
   opacity: 1;
+}
+
+.group:hover .group-hover\:opacity-80 {
+  opacity: 0.8;
 }
 
 .dark\:divide-slate-700:is(.dark *) > :not([hidden]) ~ :not([hidden]) {
@@ -3602,6 +3660,10 @@ textarea:focus:is(.dark *) {
 
 .dark\:border-violet-800\/50:is(.dark *) {
   border-color: rgb(91 33 182 / 0.5);
+}
+
+.dark\:border-slate-700\/50:is(.dark *) {
+  border-color: rgb(51 65 85 / 0.5);
 }
 
 .dark\:bg-amber-900\/20:is(.dark *) {
@@ -4163,6 +4225,18 @@ textarea:focus:is(.dark *) {
 
 .dark\:hover\:bg-violet-900\/20:hover:is(.dark *) {
   background-color: rgb(76 29 149 / 0.2);
+}
+
+.dark\:hover\:bg-amber-900\/30:hover:is(.dark *) {
+  background-color: rgb(120 53 15 / 0.3);
+}
+
+.dark\:hover\:bg-green-900\/30:hover:is(.dark *) {
+  background-color: rgb(20 83 45 / 0.3);
+}
+
+.dark\:hover\:bg-slate-700\/30:hover:is(.dark *) {
+  background-color: rgb(51 65 85 / 0.3);
 }
 
 .dark\:hover\:text-blue-400:hover:is(.dark *) {
