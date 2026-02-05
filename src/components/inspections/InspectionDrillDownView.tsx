@@ -6,7 +6,7 @@ import {
   Grid3X3, PieChartIcon, Eye, ChevronLeft, ChevronRight, ChevronDown, ChevronUp,
   TrendingUp, Award, Clock, BarChart3, BarChart2, LineChart as LineChartIcon,
   AreaChart as AreaChartIcon, Target, CheckCircle2, Gauge, Table2, Columns3,
-  LayoutGrid, List,
+  LayoutGrid, List, Activity, Maximize2,
 } from 'lucide-react';
 import { useInspection } from '@/context/InspectionContext';
 import { Inspection, InspectionDrillDownState } from '@/types';
@@ -17,7 +17,7 @@ import {
 import { formatDate } from '@/lib/utils';
 
 type ChartType = 'pie' | 'bar' | 'horizontalBar' | 'line' | 'area' | 'radial';
-type GroupViewStyle = 'tree' | 'treemap' | 'cards' | 'list' | 'data';
+type GroupViewStyle = 'tree' | 'treemap' | 'cards' | 'list' | 'data' | 'sunburst' | 'flow' | 'bubbles' | 'matrix';
 
 const INSPECTION_COLORS = {
   status: { Completed: '#22C55E', Pending: '#F59E0B', 'In Progress': '#3B82F6', Scheduled: '#8B5CF6', Failed: '#EF4444', Cancelled: '#6B7280' },
@@ -433,10 +433,476 @@ function NestedTreeNode({ group, expandedGroups, toggleGroup, typeLabels, groupB
   );
 }
 
+// ============================================
+// STUNNING VISUALIZATIONS FOR INSPECTIONS
+// ============================================
+
+// Sunburst Chart for Inspections
+interface InspectionSunburstViewProps {
+  data: NestedGroupData[];
+  groupByLevels: string[];
+  typeLabels: Record<string, string>;
+  onSegmentClick?: (group: NestedGroupData) => void;
+}
+
+function InspectionSunburstView({ data, groupByLevels, typeLabels, onSegmentClick }: InspectionSunburstViewProps) {
+  const [hoveredSegment, setHoveredSegment] = useState<NestedGroupData | null>(null);
+  
+  const flattenData = useCallback((nodes: NestedGroupData[], parentStartAngle = 0, parentEndAngle = 360, level = 0): Array<{
+    group: NestedGroupData;
+    startAngle: number;
+    endAngle: number;
+    level: number;
+    innerRadius: number;
+    outerRadius: number;
+  }> => {
+    const segments: Array<{
+      group: NestedGroupData;
+      startAngle: number;
+      endAngle: number;
+      level: number;
+      innerRadius: number;
+      outerRadius: number;
+    }> = [];
+    
+    const totalCount = nodes.reduce((sum, n) => sum + n.count, 0);
+    let currentAngle = parentStartAngle;
+    const angleRange = parentEndAngle - parentStartAngle;
+    const baseRadius = 60;
+    const ringWidth = 50;
+    
+    nodes.forEach(node => {
+      const proportion = totalCount > 0 ? node.count / totalCount : 0;
+      const nodeAngle = proportion * angleRange;
+      const endAngle = currentAngle + nodeAngle;
+      
+      segments.push({
+        group: node,
+        startAngle: currentAngle,
+        endAngle: endAngle,
+        level,
+        innerRadius: baseRadius + level * ringWidth,
+        outerRadius: baseRadius + (level + 1) * ringWidth - 4
+      });
+      
+      if (node.children && node.children.length > 0) {
+        segments.push(...flattenData(node.children, currentAngle, endAngle, level + 1));
+      }
+      currentAngle = endAngle;
+    });
+    return segments;
+  }, []);
+  
+  const segments = useMemo(() => flattenData(data), [data, flattenData]);
+  
+  const describeArc = (cx: number, cy: number, innerR: number, outerR: number, startAngle: number, endAngle: number) => {
+    const startRad = (startAngle - 90) * Math.PI / 180;
+    const endRad = (endAngle - 90) * Math.PI / 180;
+    const x1 = cx + innerR * Math.cos(startRad);
+    const y1 = cy + innerR * Math.sin(startRad);
+    const x2 = cx + outerR * Math.cos(startRad);
+    const y2 = cy + outerR * Math.sin(startRad);
+    const x3 = cx + outerR * Math.cos(endRad);
+    const y3 = cy + outerR * Math.sin(endRad);
+    const x4 = cx + innerR * Math.cos(endRad);
+    const y4 = cy + innerR * Math.sin(endRad);
+    const largeArc = endAngle - startAngle > 180 ? 1 : 0;
+    return `M ${x1} ${y1} L ${x2} ${y2} A ${outerR} ${outerR} 0 ${largeArc} 1 ${x3} ${y3} L ${x4} ${y4} A ${innerR} ${innerR} 0 ${largeArc} 0 ${x1} ${y1} Z`;
+  };
+  
+  const cx = 200, cy = 200;
+  const levelGradients = ['from-emerald-500 to-teal-600', 'from-blue-500 to-cyan-600', 'from-purple-500 to-pink-600', 'from-orange-500 to-amber-600'];
+
+  return (
+    <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-200 dark:border-slate-700 p-6">
+      <div className="flex items-center gap-3 mb-6">
+        <div className="p-2 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl">
+          <Target className="w-5 h-5 text-white" />
+        </div>
+        <div>
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Sunburst Hierarchy</h3>
+          <p className="text-xs text-gray-500">{groupByLevels.map(l => typeLabels[l]).join(' → ')}</p>
+        </div>
+      </div>
+      
+      <div className="flex flex-col lg:flex-row gap-8">
+        <div className="flex-1 flex justify-center">
+          <svg width="400" height="400" viewBox="0 0 400 400">
+            {groupByLevels.map((_, idx) => (
+              <circle key={idx} cx={cx} cy={cy} r={60 + (idx + 1) * 50} fill="none" stroke="currentColor" strokeWidth="1" className="text-gray-100 dark:text-slate-700" />
+            ))}
+            {segments.map((seg, idx) => {
+              const isHovered = hoveredSegment?.path.join('/') === seg.group.path.join('/');
+              return (
+                <g key={idx}>
+                  <path
+                    d={describeArc(cx, cy, seg.innerRadius, seg.outerRadius, seg.startAngle, seg.endAngle)}
+                    fill={seg.group.color}
+                    stroke="white"
+                    strokeWidth="2"
+                    className={`cursor-pointer transition-all duration-300 ${isHovered ? 'opacity-100 drop-shadow-lg' : 'opacity-75 hover:opacity-100'}`}
+                    style={{ transform: isHovered ? `scale(1.02)` : 'scale(1)', transformOrigin: `${cx}px ${cy}px`, filter: isHovered ? 'brightness(1.1)' : 'none' }}
+                    onMouseEnter={() => setHoveredSegment(seg.group)}
+                    onMouseLeave={() => setHoveredSegment(null)}
+                    onClick={() => onSegmentClick?.(seg.group)}
+                  />
+                  {seg.endAngle - seg.startAngle > 20 && seg.level === 0 && (
+                    <text
+                      x={cx + (seg.innerRadius + (seg.outerRadius - seg.innerRadius) / 2) * Math.cos(((seg.startAngle + seg.endAngle) / 2 - 90) * Math.PI / 180)}
+                      y={cy + (seg.innerRadius + (seg.outerRadius - seg.innerRadius) / 2) * Math.sin(((seg.startAngle + seg.endAngle) / 2 - 90) * Math.PI / 180)}
+                      textAnchor="middle" dominantBaseline="middle" className="text-xs font-medium fill-white pointer-events-none"
+                      style={{ textShadow: '0 1px 2px rgba(0,0,0,0.3)' }}
+                    >{seg.group.shortName?.substring(0, 8)}</text>
+                  )}
+                </g>
+              );
+            })}
+            <circle cx={cx} cy={cy} r="55" className="fill-gray-50 dark:fill-slate-900" />
+            <text x={cx} y={cy - 10} textAnchor="middle" className="text-2xl font-bold fill-gray-900 dark:fill-white">{data.reduce((sum, d) => sum + d.count, 0)}</text>
+            <text x={cx} y={cy + 12} textAnchor="middle" className="text-xs fill-gray-500">Inspections</text>
+          </svg>
+        </div>
+        
+        <div className="w-full lg:w-72 space-y-4">
+          {groupByLevels.map((level, idx) => (
+            <div key={level} className="flex items-center gap-3">
+              <div className={`w-4 h-4 rounded-full bg-gradient-to-br ${levelGradients[idx % levelGradients.length]}`} />
+              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Ring {idx + 1}: {typeLabels[level]}</span>
+            </div>
+          ))}
+          
+          {hoveredSegment && (
+            <div className="mt-4 p-4 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-slate-700 dark:to-slate-800 rounded-xl border border-gray-200 dark:border-slate-600">
+              <div className="flex items-center gap-2 mb-3">
+                <div className="w-3 h-3 rounded-full" style={{ backgroundColor: hoveredSegment.color }} />
+                <span className="font-semibold text-gray-900 dark:text-white">{hoveredSegment.name}</span>
+              </div>
+              <div className="grid grid-cols-2 gap-3 text-sm">
+                <div><span className="text-gray-500">Count</span><p className="font-bold text-gray-900 dark:text-white">{hoveredSegment.count}</p></div>
+                <div><span className="text-gray-500">Share</span><p className="font-bold text-gray-900 dark:text-white">{hoveredSegment.percentage}%</p></div>
+                <div><span className="text-gray-500">SLA Rate</span><p className={`font-bold ${hoveredSegment.slaCompliance >= 80 ? 'text-green-500' : hoveredSegment.slaCompliance >= 50 ? 'text-amber-500' : 'text-red-500'}`}>{hoveredSegment.slaCompliance}%</p></div>
+              </div>
+            </div>
+          )}
+          
+          <div className="space-y-2">
+            <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Top Groups</h4>
+            {data.slice(0, 5).map((group, idx) => (
+              <div key={group.path.join('/')} className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-slate-700 cursor-pointer transition-colors" onMouseEnter={() => setHoveredSegment(group)} onMouseLeave={() => setHoveredSegment(null)}>
+                <span className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white" style={{ backgroundColor: group.color }}>{idx + 1}</span>
+                <div className="flex-1 min-w-0"><p className="text-sm font-medium text-gray-900 dark:text-white truncate">{group.name}</p><p className="text-xs text-gray-500">{group.count} inspections</p></div>
+                <span className="text-sm font-bold text-gray-700 dark:text-gray-300">{group.percentage}%</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Flow View for Inspections
+interface InspectionFlowViewProps {
+  data: NestedGroupData[];
+  groupByLevels: string[];
+  typeLabels: Record<string, string>;
+  onItemClick?: (group: NestedGroupData) => void;
+}
+
+function InspectionFlowView({ data, groupByLevels, typeLabels, onItemClick }: InspectionFlowViewProps) {
+  const [expandedFlows, setExpandedFlows] = useState<Set<string>>(new Set());
+  
+  const levelData = useMemo(() => {
+    const levels: NestedGroupData[][] = [];
+    const collectByLevel = (nodes: NestedGroupData[], level: number) => {
+      if (!levels[level]) levels[level] = [];
+      nodes.forEach(node => {
+        levels[level].push(node);
+        if (node.children && node.children.length > 0) collectByLevel(node.children, level + 1);
+      });
+    };
+    collectByLevel(data, 0);
+    return levels;
+  }, [data]);
+  
+  const totalInspections = data.reduce((sum, d) => sum + d.count, 0);
+  const flowColors = ['from-emerald-500 via-emerald-400 to-teal-400', 'from-blue-500 via-blue-400 to-cyan-400', 'from-purple-500 via-purple-400 to-pink-400', 'from-orange-500 via-orange-400 to-amber-400'];
+
+  return (
+    <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-200 dark:border-slate-700 p-6 overflow-x-auto">
+      <div className="flex items-center gap-3 mb-6">
+        <div className="p-2 bg-gradient-to-br from-teal-500 to-emerald-600 rounded-xl"><Activity className="w-5 h-5 text-white" /></div>
+        <div><h3 className="text-lg font-semibold text-gray-900 dark:text-white">Data Flow</h3><p className="text-xs text-gray-500">Visualizing {totalInspections} inspections across {groupByLevels.length} levels</p></div>
+      </div>
+      
+      <div className="relative min-w-[600px]">
+        <div className="flex items-stretch mb-6" style={{ gap: '2rem' }}>
+          {groupByLevels.map((level, idx) => (
+            <div key={level} className="flex-1 min-w-[200px]">
+              <div className={`text-center p-3 rounded-xl bg-gradient-to-r ${flowColors[idx % flowColors.length]} text-white shadow-lg`}>
+                <div className="text-xs opacity-80 uppercase tracking-wider">Level {idx + 1}</div>
+                <div className="font-bold">{typeLabels[level]}</div>
+                {levelData[idx] && <div className="text-xs opacity-80 mt-1">{levelData[idx].length} groups</div>}
+              </div>
+            </div>
+          ))}
+        </div>
+        
+        <div className="flex items-start relative" style={{ gap: '2rem', zIndex: 1 }}>
+          {groupByLevels.map((level, levelIdx) => (
+            <div key={level} className="flex-1 min-w-[200px] space-y-3">
+              {levelData[levelIdx]?.sort((a, b) => b.count - a.count).slice(0, 8).map((group, groupIdx) => {
+                const isExpanded = expandedFlows.has(group.path.join('/'));
+                const hasChildren = group.children && group.children.length > 0;
+                return (
+                  <div key={group.path.join('/')} className="relative group animate-in slide-in-from-left duration-500" style={{ animationDelay: `${(levelIdx * 100) + (groupIdx * 50)}ms` }}>
+                    <div 
+                      className={`relative p-4 rounded-xl bg-white dark:bg-slate-700 border-2 cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-1 ${isExpanded ? 'border-emerald-500 shadow-lg shadow-emerald-500/20' : 'border-gray-200 dark:border-slate-600'}`}
+                      onClick={() => {
+                        if (hasChildren) setExpandedFlows(prev => { const next = new Set(prev); next.has(group.path.join('/')) ? next.delete(group.path.join('/')) : next.add(group.path.join('/')); return next; });
+                        onItemClick?.(group);
+                      }}
+                    >
+                      <div className="absolute left-0 top-0 bottom-0 w-1 rounded-l-xl" style={{ backgroundColor: group.color }} />
+                      <div className="flex items-start justify-between gap-3 pl-2">
+                        <div className="flex-1 min-w-0"><p className="font-semibold text-gray-900 dark:text-white truncate">{group.shortName}</p><p className="text-xs text-gray-500 mt-1">{group.count} inspections</p></div>
+                        <div className="relative w-12 h-12 flex-shrink-0">
+                          <svg className="w-full h-full transform -rotate-90"><circle cx="24" cy="24" r="20" className="fill-none stroke-gray-200 dark:stroke-slate-600" strokeWidth="4" /><circle cx="24" cy="24" r="20" className="fill-none" stroke={group.color} strokeWidth="4" strokeDasharray={`${(group.percentage / 100) * 125.6} 125.6`} strokeLinecap="round" /></svg>
+                          <div className="absolute inset-0 flex items-center justify-center"><span className="text-xs font-bold text-gray-900 dark:text-white">{group.percentage}%</span></div>
+                        </div>
+                      </div>
+                      <div className="mt-3 pl-2">
+                        <div className="flex items-center justify-between text-xs mb-1"><span className="text-gray-500">SLA Compliance</span><span className={`font-medium ${group.slaCompliance >= 80 ? 'text-green-500' : group.slaCompliance >= 50 ? 'text-amber-500' : 'text-red-500'}`}>{group.slaCompliance}%</span></div>
+                        <div className="h-1.5 bg-gray-200 dark:bg-slate-600 rounded-full overflow-hidden"><div className="h-full rounded-full transition-all duration-500" style={{ width: `${group.slaCompliance}%`, backgroundColor: group.slaCompliance >= 80 ? '#22C55E' : group.slaCompliance >= 50 ? '#F59E0B' : '#EF4444' }} /></div>
+                      </div>
+                      {hasChildren && levelIdx < groupByLevels.length - 1 && (
+                        <div className="absolute -right-4 top-1/2 -translate-y-1/2 z-10"><div className={`w-8 h-8 rounded-full bg-gradient-to-r ${flowColors[levelIdx % flowColors.length]} flex items-center justify-center shadow-lg transition-transform ${isExpanded ? 'scale-110' : 'group-hover:scale-110'}`}><ArrowRight className="w-4 h-4 text-white" /></div></div>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+              {levelData[levelIdx]?.length > 8 && <div className="text-center text-xs text-gray-500 py-2">+{levelData[levelIdx].length - 8} more</div>}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Bubbles View for Inspections
+interface InspectionBubblesViewProps {
+  data: NestedGroupData[];
+  groupByLevels: string[];
+  typeLabels: Record<string, string>;
+  onBubbleClick?: (group: NestedGroupData) => void;
+}
+
+function InspectionBubblesView({ data, groupByLevels, typeLabels, onBubbleClick }: InspectionBubblesViewProps) {
+  const [hoveredBubble, setHoveredBubble] = useState<NestedGroupData | null>(null);
+  const [zoomedGroup, setZoomedGroup] = useState<NestedGroupData | null>(null);
+  const containerSize = 500;
+  
+  const calculateLayout = useCallback((nodes: NestedGroupData[], containerRadius: number, centerX: number, centerY: number) => {
+    const totalCount = nodes.reduce((sum, n) => sum + n.count, 0);
+    const sortedNodes = [...nodes].sort((a, b) => b.count - a.count);
+    let angle = 0;
+    const angleStep = (2 * Math.PI) / Math.max(nodes.length, 1);
+    const spiralGrowth = containerRadius / (nodes.length + 1);
+    
+    return sortedNodes.map((node, idx) => {
+      const proportion = totalCount > 0 ? node.count / totalCount : 1 / nodes.length;
+      const radius = Math.max(20, Math.sqrt(proportion) * containerRadius * 0.6);
+      const spiralRadius = (idx + 1) * spiralGrowth * 0.8;
+      return { group: node, x: centerX + spiralRadius * Math.cos(angle + idx * angleStep), y: centerY + spiralRadius * Math.sin(angle + idx * angleStep), r: radius };
+    });
+  }, []);
+  
+  const displayData = zoomedGroup?.children || data;
+  const bubbles = useMemo(() => calculateLayout(displayData, containerSize / 2 - 20, containerSize / 2, containerSize / 2), [displayData, calculateLayout]);
+
+  return (
+    <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-200 dark:border-slate-700 p-6">
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-3">
+          <div className="p-2 bg-gradient-to-br from-pink-500 to-rose-600 rounded-xl"><Layers className="w-5 h-5 text-white" /></div>
+          <div><h3 className="text-lg font-semibold text-gray-900 dark:text-white">Bubble Hierarchy {zoomedGroup && `• ${zoomedGroup.name}`}</h3><p className="text-xs text-gray-500">{zoomedGroup ? `Level ${zoomedGroup.level + 2}` : `Level 1: ${typeLabels[groupByLevels[0]]}`}</p></div>
+        </div>
+        {zoomedGroup && <button onClick={() => setZoomedGroup(null)} className="flex items-center gap-2 px-3 py-1.5 bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 transition-colors"><ChevronLeft className="w-4 h-4" />Back</button>}
+      </div>
+      
+      <div className="flex flex-col lg:flex-row gap-6">
+        <div className="flex-1 flex justify-center">
+          <div className="relative rounded-full bg-gradient-to-br from-gray-50 to-gray-100 dark:from-slate-700 dark:to-slate-800" style={{ width: containerSize, height: containerSize }}>
+            <div className="absolute inset-8 rounded-full border-2 border-dashed border-gray-200 dark:border-slate-600 opacity-50" />
+            <div className="absolute inset-16 rounded-full border-2 border-dashed border-gray-200 dark:border-slate-600 opacity-30" />
+            {bubbles.map((bubble, idx) => {
+              const isHovered = hoveredBubble?.path.join('/') === bubble.group.path.join('/');
+              const hasChildren = bubble.group.children && bubble.group.children.length > 0;
+              return (
+                <div
+                  key={bubble.group.path.join('/')}
+                  className={`absolute rounded-full cursor-pointer transition-all duration-300 flex items-center justify-center overflow-hidden animate-in zoom-in ${isHovered ? 'z-20 scale-110' : 'z-10'}`}
+                  style={{ left: bubble.x - bubble.r, top: bubble.y - bubble.r, width: bubble.r * 2, height: bubble.r * 2, animationDelay: `${idx * 50}ms`, boxShadow: isHovered ? `0 0 0 3px white, 0 0 0 5px ${bubble.group.color}, 0 20px 50px -10px ${bubble.group.color}60` : `0 4px 20px -5px ${bubble.group.color}40` }}
+                  onMouseEnter={() => setHoveredBubble(bubble.group)}
+                  onMouseLeave={() => setHoveredBubble(null)}
+                  onClick={() => { if (hasChildren) setZoomedGroup(bubble.group); onBubbleClick?.(bubble.group); }}
+                >
+                  <div className="absolute inset-0 rounded-full" style={{ background: `linear-gradient(135deg, ${bubble.group.color} 0%, ${bubble.group.color}dd 100%)` }} />
+                  <svg className="absolute inset-0 w-full h-full -rotate-90"><circle cx={bubble.r} cy={bubble.r} r={bubble.r - 3} fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="4" /><circle cx={bubble.r} cy={bubble.r} r={bubble.r - 3} fill="none" stroke={bubble.group.slaCompliance >= 80 ? '#22C55E' : bubble.group.slaCompliance >= 50 ? '#F59E0B' : '#EF4444'} strokeWidth="4" strokeDasharray={`${(bubble.group.slaCompliance / 100) * (2 * Math.PI * (bubble.r - 3))} ${2 * Math.PI * (bubble.r - 3)}`} strokeLinecap="round" /></svg>
+                  <div className="relative z-10 text-center text-white p-2">
+                    {bubble.r > 35 && <p className="font-bold text-xs truncate max-w-full" style={{ maxWidth: bubble.r * 1.4 }}>{bubble.group.shortName}</p>}
+                    <p className="font-bold text-sm">{bubble.group.count}</p>
+                    {bubble.r > 45 && <p className="text-xs opacity-80">{bubble.group.percentage}%</p>}
+                  </div>
+                  {hasChildren && <div className={`absolute bottom-1 right-1 w-5 h-5 rounded-full bg-white/20 flex items-center justify-center transition-opacity ${isHovered ? 'opacity-100' : 'opacity-0'}`}><Maximize2 className="w-3 h-3 text-white" /></div>}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+        
+        <div className="w-full lg:w-64 space-y-4">
+          {hoveredBubble && (
+            <div className="p-4 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-slate-700 dark:to-slate-800 rounded-xl border border-gray-200 dark:border-slate-600">
+              <div className="flex items-center gap-2 mb-3"><div className="w-4 h-4 rounded-full shadow-lg" style={{ backgroundColor: hoveredBubble.color }} /><span className="font-bold text-gray-900 dark:text-white">{hoveredBubble.name}</span></div>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="bg-white dark:bg-slate-800 rounded-lg p-2 text-center"><p className="text-lg font-bold text-gray-900 dark:text-white">{hoveredBubble.count}</p><p className="text-xs text-gray-500">Inspections</p></div>
+                <div className="bg-white dark:bg-slate-800 rounded-lg p-2 text-center"><p className={`text-lg font-bold ${hoveredBubble.slaCompliance >= 80 ? 'text-green-500' : hoveredBubble.slaCompliance >= 50 ? 'text-amber-500' : 'text-red-500'}`}>{hoveredBubble.slaCompliance}%</p><p className="text-xs text-gray-500">SLA</p></div>
+              </div>
+              {hoveredBubble.children && hoveredBubble.children.length > 0 && <p className="mt-3 text-xs text-emerald-600 dark:text-emerald-400 text-center">Click to explore {hoveredBubble.children.length} sub-groups →</p>}
+            </div>
+          )}
+          <div className="space-y-2">
+            <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Groups</h4>
+            {displayData.slice(0, 6).map(group => (
+              <div key={group.path.join('/')} className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-slate-700 cursor-pointer transition-colors" onMouseEnter={() => setHoveredBubble(group)} onMouseLeave={() => setHoveredBubble(null)}>
+                <div className="w-3 h-3 rounded-full flex-shrink-0" style={{ backgroundColor: group.color }} />
+                <span className="text-sm text-gray-700 dark:text-gray-300 truncate flex-1">{group.shortName}</span>
+                <span className="text-xs font-medium text-gray-500">{group.count}</span>
+              </div>
+            ))}
+            {displayData.length > 6 && <p className="text-xs text-gray-400 text-center">+{displayData.length - 6} more</p>}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Matrix View for Inspections
+interface InspectionMatrixViewProps {
+  data: NestedGroupData[];
+  groupByLevels: string[];
+  typeLabels: Record<string, string>;
+  inspections: Inspection[];
+  onCellClick?: (rowGroup: NestedGroupData, colValue: string) => void;
+}
+
+function InspectionMatrixView({ data, groupByLevels, typeLabels, inspections, onCellClick }: InspectionMatrixViewProps) {
+  const [hoveredCell, setHoveredCell] = useState<{row: string, col: string, count: number} | null>(null);
+  const rowDimension = groupByLevels[0];
+  const colDimension = groupByLevels[1] || 'status';
+  
+  const colValues = useMemo(() => {
+    const values = new Set<string>();
+    inspections.forEach(i => { const val = getInspectionFieldValue(i, colDimension as any); if (val) values.add(val); });
+    return Array.from(values).sort();
+  }, [inspections, colDimension]);
+  
+  const matrixData = useMemo(() => {
+    return data.map(rowGroup => {
+      const cells: Record<string, { count: number; slaRate: number }> = {};
+      colValues.forEach(colVal => {
+        const matchingItems = rowGroup.items.filter(i => getInspectionFieldValue(i, colDimension as any) === colVal);
+        const count = matchingItems.length;
+        const withinSLA = matchingItems.filter(i => i.slaStatus === 'Within SLA').length;
+        cells[colVal] = { count, slaRate: count > 0 ? Math.round((withinSLA / count) * 100) : 100 };
+      });
+      return { row: rowGroup, cells };
+    });
+  }, [data, colValues, colDimension]);
+  
+  const maxCount = useMemo(() => Math.max(...matrixData.flatMap(row => Object.values(row.cells).map(c => c.count))), [matrixData]);
+  const getHeatColor = (count: number, slaRate: number) => {
+    const intensity = maxCount > 0 ? count / maxCount : 0;
+    if (slaRate >= 80) return `rgba(34, 197, 94, ${0.2 + intensity * 0.6})`;
+    if (slaRate >= 50) return `rgba(251, 191, 36, ${0.2 + intensity * 0.6})`;
+    return `rgba(239, 68, 68, ${0.2 + intensity * 0.6})`;
+  };
+
+  return (
+    <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-200 dark:border-slate-700 p-6">
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-3">
+          <div className="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl"><Grid3X3 className="w-5 h-5 text-white" /></div>
+          <div><h3 className="text-lg font-semibold text-gray-900 dark:text-white">Matrix Heatmap</h3><p className="text-xs text-gray-500">{typeLabels[rowDimension]} × {typeLabels[colDimension]}</p></div>
+        </div>
+        <div className="flex items-center gap-4 text-xs">
+          <div className="flex items-center gap-2"><div className="w-4 h-4 rounded" style={{ backgroundColor: 'rgba(34, 197, 94, 0.6)' }} /><span className="text-gray-500">Good SLA</span></div>
+          <div className="flex items-center gap-2"><div className="w-4 h-4 rounded" style={{ backgroundColor: 'rgba(251, 191, 36, 0.6)' }} /><span className="text-gray-500">Warning</span></div>
+          <div className="flex items-center gap-2"><div className="w-4 h-4 rounded" style={{ backgroundColor: 'rgba(239, 68, 68, 0.6)' }} /><span className="text-gray-500">Critical</span></div>
+        </div>
+      </div>
+      
+      {hoveredCell && (
+        <div className="mb-4 p-3 bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 rounded-xl border border-emerald-200 dark:border-emerald-800">
+          <div className="flex items-center gap-4">
+            <div><span className="text-xs text-gray-500">{typeLabels[rowDimension]}:</span><span className="ml-1 font-semibold text-gray-900 dark:text-white">{hoveredCell.row}</span></div>
+            <ArrowRight className="w-4 h-4 text-gray-400" />
+            <div><span className="text-xs text-gray-500">{typeLabels[colDimension]}:</span><span className="ml-1 font-semibold text-gray-900 dark:text-white">{hoveredCell.col}</span></div>
+            <div className="ml-auto flex items-center gap-2"><span className="text-2xl font-bold text-gray-900 dark:text-white">{hoveredCell.count}</span><span className="text-gray-500">inspections</span></div>
+          </div>
+        </div>
+      )}
+      
+      <div className="overflow-x-auto">
+        <table className="w-full border-collapse">
+          <thead>
+            <tr>
+              <th className="p-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider border-b-2 border-gray-200 dark:border-slate-600 bg-gray-50 dark:bg-slate-900/50 sticky left-0 z-10">{typeLabels[rowDimension]}</th>
+              {colValues.map(col => (<th key={col} className="p-3 text-center text-xs font-semibold text-gray-700 dark:text-gray-300 border-b-2 border-gray-200 dark:border-slate-600 bg-gray-50 dark:bg-slate-900/50 min-w-[100px]"><div className="truncate max-w-[100px]">{col}</div></th>))}
+              <th className="p-3 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider border-b-2 border-gray-200 dark:border-slate-600 bg-gray-50 dark:bg-slate-900/50">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            {matrixData.map(row => (
+              <tr key={row.row.path.join('/')} className="group">
+                <td className="p-3 border-b border-gray-100 dark:border-slate-700 bg-white dark:bg-slate-800 sticky left-0 z-10">
+                  <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full flex-shrink-0" style={{ backgroundColor: row.row.color }} /><span className="font-medium text-gray-900 dark:text-white truncate max-w-[150px]">{row.row.shortName}</span></div>
+                </td>
+                {colValues.map(col => {
+                  const cell = row.cells[col];
+                  const isHovered = hoveredCell?.row === row.row.name && hoveredCell?.col === col;
+                  return (
+                    <td key={col} className={`p-2 border-b border-gray-100 dark:border-slate-700 text-center cursor-pointer transition-all duration-200 ${isHovered ? 'ring-2 ring-emerald-500 ring-inset' : ''}`} style={{ backgroundColor: cell.count > 0 ? getHeatColor(cell.count, cell.slaRate) : 'transparent' }} onMouseEnter={() => setHoveredCell({ row: row.row.name, col, count: cell.count })} onMouseLeave={() => setHoveredCell(null)} onClick={() => onCellClick?.(row.row, col)}>
+                      {cell.count > 0 && <div className="animate-in zoom-in duration-200"><span className="text-lg font-bold text-gray-900 dark:text-white">{cell.count}</span><div className="text-xs text-gray-500 mt-0.5">{cell.slaRate}% SLA</div></div>}
+                      {cell.count === 0 && <span className="text-gray-300 dark:text-slate-600">—</span>}
+                    </td>
+                  );
+                })}
+                <td className="p-3 border-b border-gray-100 dark:border-slate-700 text-center bg-gray-50 dark:bg-slate-900/50"><span className="font-bold text-gray-900 dark:text-white">{row.row.count}</span></td>
+              </tr>
+            ))}
+          </tbody>
+          <tfoot>
+            <tr className="bg-gray-50 dark:bg-slate-900/50">
+              <td className="p-3 font-semibold text-gray-700 dark:text-gray-300 sticky left-0 bg-gray-50 dark:bg-slate-900/50">Total</td>
+              {colValues.map(col => (<td key={col} className="p-3 text-center font-bold text-gray-900 dark:text-white">{matrixData.reduce((sum, row) => sum + row.cells[col].count, 0)}</td>))}
+              <td className="p-3 text-center font-bold text-gray-900 dark:text-white bg-emerald-50 dark:bg-emerald-900/20">{inspections.length}</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  );
+}
+
 // Multi-Level Group View - Tree, Treemap, Cards, List, Data views
 function MultiLevelGroupView() {
   const { drillDown, navigateDrillDown, getFilteredByDrillDown, openInspectionModal } = useInspection();
-  const [viewStyle, setViewStyle] = useState<GroupViewStyle>('cards');
+  const [viewStyle, setViewStyle] = useState<GroupViewStyle>('sunburst');
   const [chartType, setChartType] = useState<ChartType>('pie');
   const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set());
   const [sortBy, setSortBy] = useState<'count' | 'name' | 'sla'>('count');
@@ -553,7 +1019,11 @@ function MultiLevelGroupView() {
 
   const typeLabels: Record<string, string> = { inspectionType: 'Inspection Type', status: 'Status', inspector: 'Inspector', zone: 'Zone', priority: 'Priority', category: 'Category' };
 
-  const viewStyleOptions: { id: GroupViewStyle; label: string; icon: React.ReactNode }[] = [
+  const viewStyleOptions: { id: GroupViewStyle; label: string; icon: React.ReactNode; gradient?: string }[] = [
+    { id: 'sunburst', label: 'Sunburst', icon: <Target className="w-4 h-4" />, gradient: 'from-violet-500 to-purple-600' },
+    { id: 'flow', label: 'Flow', icon: <TrendingUp className="w-4 h-4" />, gradient: 'from-cyan-500 to-blue-600' },
+    { id: 'bubbles', label: 'Bubbles', icon: <Layers className="w-4 h-4" />, gradient: 'from-pink-500 to-rose-600' },
+    { id: 'matrix', label: 'Matrix', icon: <LayoutGrid className="w-4 h-4" />, gradient: 'from-amber-500 to-orange-600' },
     { id: 'tree', label: 'Tree', icon: <Columns3 className="w-4 h-4" /> },
     { id: 'treemap', label: 'Treemap', icon: <LayoutGrid className="w-4 h-4" /> },
     { id: 'cards', label: 'Cards', icon: <Grid3X3 className="w-4 h-4" /> },
@@ -627,9 +1097,22 @@ function MultiLevelGroupView() {
               </p>
             </div>
             <div className="flex items-center gap-2">
-              <div className="flex items-center gap-1 p-1 bg-gray-100 dark:bg-slate-700 rounded-lg">
+              <div className="flex items-center gap-1 p-1 bg-gray-100 dark:bg-slate-700 rounded-xl overflow-x-auto">
                 {viewStyleOptions.map(opt => (
-                  <button key={opt.id} onClick={() => setViewStyle(opt.id)} title={opt.label} className={`p-2 rounded-md transition-all ${viewStyle === opt.id ? 'bg-white dark:bg-slate-600 text-emerald-600 shadow-sm' : 'text-gray-400 hover:text-gray-600'}`}>{opt.icon}</button>
+                  <button 
+                    key={opt.id} 
+                    onClick={() => setViewStyle(opt.id)} 
+                    title={opt.label} 
+                    className={`p-2 rounded-lg transition-all whitespace-nowrap ${
+                      viewStyle === opt.id 
+                        ? opt.gradient 
+                          ? `bg-gradient-to-r ${opt.gradient} text-white shadow-lg` 
+                          : 'bg-white dark:bg-slate-600 text-emerald-600 shadow-sm' 
+                        : 'text-gray-400 hover:text-gray-600 hover:bg-gray-200 dark:hover:bg-slate-600'
+                    }`}
+                  >
+                    {opt.icon}
+                  </button>
                 ))}
               </div>
               {(viewStyle === 'cards' || viewStyle === 'list') && (
@@ -644,6 +1127,67 @@ function MultiLevelGroupView() {
         </div>
 
         <div className="p-6">
+          {/* Sunburst View */}
+          {viewStyle === 'sunburst' && (
+            <InspectionSunburstView
+              data={isMultiLevel ? nestedGroupData : groupData.map(g => ({
+                ...g,
+                children: [],
+                level: 0,
+                path: [g.name]
+              }))}
+              groupByLevels={isMultiLevel ? groupByLevels : [currentType || 'inspectionType']}
+              typeLabels={typeLabels}
+              onSegmentClick={(group) => toggleGroup(group.path.join('/'))}
+            />
+          )}
+
+          {/* Flow View */}
+          {viewStyle === 'flow' && (
+            <InspectionFlowView
+              data={isMultiLevel ? nestedGroupData : groupData.map(g => ({
+                ...g,
+                children: [],
+                level: 0,
+                path: [g.name]
+              }))}
+              groupByLevels={isMultiLevel ? groupByLevels : [currentType || 'inspectionType']}
+              typeLabels={typeLabels}
+              onItemClick={(group) => toggleGroup(group.path.join('/'))}
+            />
+          )}
+
+          {/* Bubbles View */}
+          {viewStyle === 'bubbles' && (
+            <InspectionBubblesView
+              data={isMultiLevel ? nestedGroupData : groupData.map(g => ({
+                ...g,
+                children: [],
+                level: 0,
+                path: [g.name]
+              }))}
+              groupByLevels={isMultiLevel ? groupByLevels : [currentType || 'inspectionType']}
+              typeLabels={typeLabels}
+              onBubbleClick={(group) => toggleGroup(group.path.join('/'))}
+            />
+          )}
+
+          {/* Matrix View */}
+          {viewStyle === 'matrix' && (
+            <InspectionMatrixView
+              data={isMultiLevel ? nestedGroupData : groupData.map(g => ({
+                ...g,
+                children: [],
+                level: 0,
+                path: [g.name]
+              }))}
+              groupByLevels={isMultiLevel ? groupByLevels : [currentType || 'inspectionType', 'status']}
+              typeLabels={typeLabels}
+              inspections={inspections}
+              onCellClick={(rowGroup, colValue) => console.log('Matrix cell clicked:', rowGroup.name, colValue)}
+            />
+          )}
+
           {/* Tree View - Multi-Level */}
           {viewStyle === 'tree' && isMultiLevel && (
             <div className="space-y-2">
