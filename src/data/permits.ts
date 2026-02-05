@@ -23,7 +23,7 @@ export const permitsData: PermitData = {
       "owner": "Mohammed Al Rashid",
       "permitCategory": "Sewerage",
       "priority": "High",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 2,
@@ -41,7 +41,7 @@ export const permitsData: PermitData = {
       "owner": "Fatima Al Hosani",
       "permitCategory": "Sewerage",
       "priority": "Medium",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 3,
@@ -59,7 +59,7 @@ export const permitsData: PermitData = {
       "owner": "Ahmed Al Ketbi",
       "permitCategory": "Sewerage",
       "priority": "Low",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 4,
@@ -77,7 +77,7 @@ export const permitsData: PermitData = {
       "owner": "Sara Al Nuaimi",
       "permitCategory": "Sewerage",
       "priority": "Medium",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 5,
@@ -95,7 +95,7 @@ export const permitsData: PermitData = {
       "owner": "Khalid Al Shamsi",
       "permitCategory": "Sewerage",
       "priority": "High",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 6,
@@ -113,7 +113,7 @@ export const permitsData: PermitData = {
       "owner": "Noura Al Dhaheri",
       "permitCategory": "Sewerage",
       "priority": "Medium",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 7,
@@ -131,7 +131,7 @@ export const permitsData: PermitData = {
       "owner": "Rashid Al Suwaidi",
       "permitCategory": "Sewerage",
       "priority": "Low",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 8,
@@ -149,7 +149,7 @@ export const permitsData: PermitData = {
       "owner": "Mariam Al Falasi",
       "permitCategory": "Sewerage",
       "priority": "High",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 9,
@@ -167,7 +167,7 @@ export const permitsData: PermitData = {
       "owner": "Omar Al Hashmi",
       "permitCategory": "Sewerage",
       "priority": "Medium",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 10,
@@ -185,7 +185,7 @@ export const permitsData: PermitData = {
       "owner": "Aisha Al Mansoori",
       "permitCategory": "Sewerage",
       "priority": "High",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 11,
@@ -203,7 +203,7 @@ export const permitsData: PermitData = {
       "owner": "Sultan Al Qubaisi",
       "permitCategory": "Sewerage",
       "priority": "Medium",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 12,
@@ -221,7 +221,7 @@ export const permitsData: PermitData = {
       "owner": "Hamdan Al Mazrouei",
       "permitCategory": "Sewerage Modification",
       "priority": "High",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 13,
@@ -239,7 +239,7 @@ export const permitsData: PermitData = {
       "owner": "Latifa Al Kaabi",
       "permitCategory": "Sewerage Connection",
       "priority": "Medium",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 14,
@@ -257,7 +257,7 @@ export const permitsData: PermitData = {
       "owner": "Saeed Al Mheiri",
       "permitCategory": "Sewerage Connection",
       "priority": "Low",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 15,
@@ -275,7 +275,7 @@ export const permitsData: PermitData = {
       "owner": "Moza Al Rumaithi",
       "permitCategory": "Sewerage",
       "priority": "High",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 16,
@@ -293,7 +293,7 @@ export const permitsData: PermitData = {
       "owner": "Jassim Al Tayer",
       "permitCategory": "Sewerage",
       "priority": "Medium",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 17,
@@ -311,7 +311,7 @@ export const permitsData: PermitData = {
       "owner": "Shamsa Al Zaabi",
       "permitCategory": "Sewerage",
       "priority": "High",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 18,
@@ -329,7 +329,7 @@ export const permitsData: PermitData = {
       "owner": "Humaid Al Ketbi",
       "permitCategory": "Sewerage",
       "priority": "Low",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 19,
@@ -347,7 +347,7 @@ export const permitsData: PermitData = {
       "owner": "Majid Al Ghurair",
       "permitCategory": "Sewerage",
       "priority": "Medium",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 20,
@@ -365,7 +365,7 @@ export const permitsData: PermitData = {
       "owner": "Shamma Al Nahyan",
       "permitCategory": "Sewerage",
       "priority": "High",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 21,
@@ -383,7 +383,7 @@ export const permitsData: PermitData = {
       "owner": "Theyab Al Maktoum",
       "permitCategory": "Sewerage",
       "priority": "Medium",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 22,
@@ -401,7 +401,7 @@ export const permitsData: PermitData = {
       "owner": "Maryam Al Baloushi",
       "permitCategory": "Sewerage",
       "priority": "Low",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 23,
@@ -419,7 +419,7 @@ export const permitsData: PermitData = {
       "owner": "Abdulla Al Remeithi",
       "permitCategory": "Sewerage",
       "priority": "High",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 24,
@@ -437,7 +437,7 @@ export const permitsData: PermitData = {
       "owner": "Khawla Al Serkal",
       "permitCategory": "Sewerage",
       "priority": "Medium",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 25,
@@ -455,7 +455,7 @@ export const permitsData: PermitData = {
       "owner": "Fatima Al Ketbi",
       "permitCategory": "Sewerage",
       "priority": "Low",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 26,
@@ -473,7 +473,7 @@ export const permitsData: PermitData = {
       "owner": "Salem Al Ameri",
       "permitCategory": "Sewerage",
       "priority": "High",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 27,
@@ -491,7 +491,7 @@ export const permitsData: PermitData = {
       "owner": "Hessa Al Dhaheri",
       "permitCategory": "Sewerage",
       "priority": "Medium",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 28,
@@ -509,7 +509,7 @@ export const permitsData: PermitData = {
       "owner": "Mansoor Al Falasi",
       "permitCategory": "Sewerage",
       "priority": "Low",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 29,
@@ -527,7 +527,7 @@ export const permitsData: PermitData = {
       "owner": "Reem Al Hashimi",
       "permitCategory": "Sewerage",
       "priority": "High",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 30,
@@ -545,7 +545,7 @@ export const permitsData: PermitData = {
       "owner": "Yousef Al Hosani",
       "permitCategory": "Sewerage",
       "priority": "Medium",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 31,
@@ -563,7 +563,7 @@ export const permitsData: PermitData = {
       "owner": "Dana Al Suwaidi",
       "permitCategory": "Sewerage",
       "priority": "Low",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 32,
@@ -581,7 +581,7 @@ export const permitsData: PermitData = {
       "owner": "Obaid Al Qubaisi",
       "permitCategory": "Sewerage",
       "priority": "High",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 33,
@@ -599,7 +599,7 @@ export const permitsData: PermitData = {
       "owner": "Aysha Al Tayer",
       "permitCategory": "Sewerage",
       "priority": "Medium",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 34,
@@ -617,7 +617,7 @@ export const permitsData: PermitData = {
       "owner": "Khadija Al Rumaithi",
       "permitCategory": "Sewerage",
       "priority": "Low",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 35,
@@ -635,7 +635,7 @@ export const permitsData: PermitData = {
       "owner": "Saif Al Ketbi",
       "permitCategory": "Sewerage",
       "priority": "High",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 36,
@@ -653,7 +653,7 @@ export const permitsData: PermitData = {
       "owner": "Maha Al Shamsi",
       "permitCategory": "Sewerage Documentation",
       "priority": "Medium",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 37,
@@ -671,7 +671,7 @@ export const permitsData: PermitData = {
       "owner": "Nasser Al Ghurair",
       "permitCategory": "Sewerage Documentation",
       "priority": "Low",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 38,
@@ -689,7 +689,7 @@ export const permitsData: PermitData = {
       "owner": "Amna Al Nahyan",
       "permitCategory": "Sewerage Documentation",
       "priority": "High",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 39,
@@ -707,7 +707,7 @@ export const permitsData: PermitData = {
       "owner": "Khaled Al Maktoum",
       "permitCategory": "Sewerage Documentation",
       "priority": "Medium",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 40,
@@ -725,7 +725,7 @@ export const permitsData: PermitData = {
       "owner": "Rawda Al Baloushi",
       "permitCategory": "Sewerage Documentation",
       "priority": "Low",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 41,
@@ -743,7 +743,7 @@ export const permitsData: PermitData = {
       "owner": "Sultan Al Falasi",
       "permitCategory": "Sewerage Documentation",
       "priority": "High",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 42,
@@ -761,7 +761,7 @@ export const permitsData: PermitData = {
       "owner": "Hamda Al Ameri",
       "permitCategory": "Sewerage",
       "priority": "Medium",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 43,
@@ -779,7 +779,7 @@ export const permitsData: PermitData = {
       "owner": "Maitha Al Hosani",
       "permitCategory": "Sewerage",
       "priority": "Low",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 44,
@@ -797,7 +797,7 @@ export const permitsData: PermitData = {
       "owner": "Rashid Al Ketbi",
       "permitCategory": "Sewerage",
       "priority": "High",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 45,
@@ -815,7 +815,7 @@ export const permitsData: PermitData = {
       "owner": "Noora Al Mansoori",
       "permitCategory": "Sewerage",
       "priority": "Medium",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 46,
@@ -833,7 +833,7 @@ export const permitsData: PermitData = {
       "owner": "Juma Al Zaabi",
       "permitCategory": "Sewerage",
       "priority": "Low",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 47,
@@ -851,7 +851,7 @@ export const permitsData: PermitData = {
       "owner": "Hind Al Mheiri",
       "permitCategory": "Sewerage",
       "priority": "High",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 48,
@@ -869,7 +869,7 @@ export const permitsData: PermitData = {
       "owner": "Ahmed Al Ghurair",
       "permitCategory": "Sewerage",
       "priority": "Medium",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 49,
@@ -887,7 +887,7 @@ export const permitsData: PermitData = {
       "owner": "Meera Al Suwaidi",
       "permitCategory": "Sewerage Connection",
       "priority": "Low",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 50,
@@ -905,7 +905,7 @@ export const permitsData: PermitData = {
       "owner": "Budoor Al Dhaheri",
       "permitCategory": "Sewerage",
       "priority": "High",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 51,
@@ -923,7 +923,7 @@ export const permitsData: PermitData = {
       "owner": "Shaikha Al Nahyan",
       "permitCategory": "Sewerage",
       "priority": "Medium",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 52,
@@ -941,7 +941,7 @@ export const permitsData: PermitData = {
       "owner": "Zayed Al Maktoum",
       "permitCategory": "Sewerage",
       "priority": "Low",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 53,
@@ -959,7 +959,7 @@ export const permitsData: PermitData = {
       "owner": "Fatima Al Ameri",
       "permitCategory": "Sewerage",
       "priority": "High",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 54,
@@ -977,7 +977,7 @@ export const permitsData: PermitData = {
       "owner": "Mohammed Al Baloushi",
       "permitCategory": "Sewerage",
       "priority": "Medium",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 55,
@@ -995,7 +995,7 @@ export const permitsData: PermitData = {
       "owner": "Sara Al Kaabi",
       "permitCategory": "Sewerage Connection",
       "priority": "Low",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 56,
@@ -1013,7 +1013,7 @@ export const permitsData: PermitData = {
       "owner": "Khawla Al Hosani",
       "permitCategory": "Sewerage",
       "priority": "High",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 57,
@@ -1031,7 +1031,7 @@ export const permitsData: PermitData = {
       "owner": "Hamad Al Rumaithi",
       "permitCategory": "Sewerage",
       "priority": "Medium",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 58,
@@ -1049,7 +1049,7 @@ export const permitsData: PermitData = {
       "owner": "Latifa Al Serkal",
       "permitCategory": "Sewerage",
       "priority": "Low",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 59,
@@ -1067,7 +1067,7 @@ export const permitsData: PermitData = {
       "owner": "Saeed Al Nahyan",
       "permitCategory": "Sewerage Documentation",
       "priority": "High",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 60,
@@ -1085,7 +1085,7 @@ export const permitsData: PermitData = {
       "owner": "Moza Al Qubaisi",
       "permitCategory": "Sewerage Modification",
       "priority": "Medium",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 61,
@@ -1103,7 +1103,7 @@ export const permitsData: PermitData = {
       "owner": "Jassim Al Ketbi",
       "permitCategory": "Sewerage",
       "priority": "Low",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 62,
@@ -1121,7 +1121,7 @@ export const permitsData: PermitData = {
       "owner": "Shamsa Al Falasi",
       "permitCategory": "Sewerage",
       "priority": "High",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 63,
@@ -1139,7 +1139,7 @@ export const permitsData: PermitData = {
       "owner": "Humaid Al Tayer",
       "permitCategory": "Sewerage",
       "priority": "Medium",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 64,
@@ -1157,7 +1157,7 @@ export const permitsData: PermitData = {
       "owner": "Majid Al Zaabi",
       "permitCategory": "Sewerage",
       "priority": "Low",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 65,
@@ -1175,7 +1175,7 @@ export const permitsData: PermitData = {
       "owner": "Shamma Al Mheiri",
       "permitCategory": "Sewerage",
       "priority": "High",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 66,
@@ -1193,7 +1193,7 @@ export const permitsData: PermitData = {
       "owner": "Theyab Al Baloushi",
       "permitCategory": "Sewerage Documentation",
       "priority": "Medium",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 67,
@@ -1211,7 +1211,7 @@ export const permitsData: PermitData = {
       "owner": "Maryam Al Ghurair",
       "permitCategory": "Sewerage",
       "priority": "Low",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 68,
@@ -1229,7 +1229,7 @@ export const permitsData: PermitData = {
       "owner": "Abdulla Al Suwaidi",
       "permitCategory": "Sewerage",
       "priority": "High",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 69,
@@ -1247,7 +1247,7 @@ export const permitsData: PermitData = {
       "owner": "Khawla Al Remeithi",
       "permitCategory": "Sewerage",
       "priority": "Medium",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 70,
@@ -1265,7 +1265,7 @@ export const permitsData: PermitData = {
       "owner": "Fatima Al Mansoori",
       "permitCategory": "Sewerage",
       "priority": "Low",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 71,
@@ -1283,7 +1283,7 @@ export const permitsData: PermitData = {
       "owner": "Salem Al Ketbi",
       "permitCategory": "Sewerage",
       "priority": "High",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 72,
@@ -1301,7 +1301,7 @@ export const permitsData: PermitData = {
       "owner": "Hessa Al Nahyan",
       "permitCategory": "Sewerage",
       "priority": "Medium",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 73,
@@ -1319,7 +1319,7 @@ export const permitsData: PermitData = {
       "owner": "Mansoor Al Hosani",
       "permitCategory": "Sewerage",
       "priority": "Low",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 74,
@@ -1337,7 +1337,7 @@ export const permitsData: PermitData = {
       "owner": "Reem Al Mheiri",
       "permitCategory": "Sewerage",
       "priority": "High",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 75,
@@ -1355,7 +1355,7 @@ export const permitsData: PermitData = {
       "owner": "Yousef Al Dhaheri",
       "permitCategory": "External Device",
       "priority": "Medium",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 76,
@@ -1373,7 +1373,7 @@ export const permitsData: PermitData = {
       "owner": "Dana Al Qubaisi",
       "permitCategory": "Sewerage",
       "priority": "Low",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 77,
@@ -1391,7 +1391,7 @@ export const permitsData: PermitData = {
       "owner": "Obaid Al Tayer",
       "permitCategory": "Temporary Connection",
       "priority": "High",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 78,
@@ -1409,7 +1409,7 @@ export const permitsData: PermitData = {
       "owner": "Aysha Al Rumaithi",
       "permitCategory": "Sewerage Modification",
       "priority": "Medium",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 79,
@@ -1427,7 +1427,7 @@ export const permitsData: PermitData = {
       "owner": "Khadija Al Zaabi",
       "permitCategory": "Sewerage Connection",
       "priority": "Low",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 80,
@@ -1445,7 +1445,7 @@ export const permitsData: PermitData = {
       "owner": "Saif Al Maktoum",
       "permitCategory": "Sewerage Documentation",
       "priority": "High",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 81,
@@ -1463,7 +1463,7 @@ export const permitsData: PermitData = {
       "owner": "Maha Al Baloushi",
       "permitCategory": "Sewerage",
       "priority": "Medium",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 82,
@@ -1481,7 +1481,7 @@ export const permitsData: PermitData = {
       "owner": "Nasser Al Ameri",
       "permitCategory": "Sewerage",
       "priority": "Low",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 83,
@@ -1499,7 +1499,7 @@ export const permitsData: PermitData = {
       "owner": "Rawda Al Suwaidi",
       "permitCategory": "Sewerage",
       "priority": "High",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 84,
@@ -1517,7 +1517,7 @@ export const permitsData: PermitData = {
       "owner": "Sultan Al Ketbi",
       "permitCategory": "Sewerage",
       "priority": "Medium",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 85,
@@ -1535,7 +1535,7 @@ export const permitsData: PermitData = {
       "owner": "Hamda Al Hosani",
       "permitCategory": "Sewerage",
       "priority": "Low",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 86,
@@ -1553,7 +1553,7 @@ export const permitsData: PermitData = {
       "owner": "Mohammed Al Rashid",
       "permitCategory": "Sewerage",
       "priority": "High",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 87,
@@ -1571,7 +1571,7 @@ export const permitsData: PermitData = {
       "owner": "Fatima Al Hosani",
       "permitCategory": "Sewerage",
       "priority": "Medium",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 88,
@@ -1589,7 +1589,7 @@ export const permitsData: PermitData = {
       "owner": "Ahmed Al Ketbi",
       "permitCategory": "Sewerage Connection",
       "priority": "High",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 89,
@@ -1607,7 +1607,7 @@ export const permitsData: PermitData = {
       "owner": "Sara Al Nuaimi",
       "permitCategory": "Sewerage Documentation",
       "priority": "Low",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 90,
@@ -1625,7 +1625,7 @@ export const permitsData: PermitData = {
       "owner": "Khalid Al Shamsi",
       "permitCategory": "Sewerage Modification",
       "priority": "High",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 91,
@@ -1643,7 +1643,7 @@ export const permitsData: PermitData = {
       "owner": "Noura Al Dhaheri",
       "permitCategory": "Temporary Connection",
       "priority": "Medium",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 92,
@@ -1661,7 +1661,7 @@ export const permitsData: PermitData = {
       "owner": "Rashid Al Suwaidi",
       "permitCategory": "External Device",
       "priority": "Low",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 93,
@@ -1679,7 +1679,7 @@ export const permitsData: PermitData = {
       "owner": "Mariam Al Falasi",
       "permitCategory": "Sewerage",
       "priority": "High",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 94,
@@ -1697,7 +1697,7 @@ export const permitsData: PermitData = {
       "owner": "Hamad Al Mansoori",
       "permitCategory": "Sewerage",
       "priority": "Medium",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 95,
@@ -1715,7 +1715,7 @@ export const permitsData: PermitData = {
       "owner": "Layla Al Suwaidi",
       "permitCategory": "Sewerage Connection",
       "priority": "High",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 96,
@@ -1733,7 +1733,7 @@ export const permitsData: PermitData = {
       "owner": "Sultan Al Ketbi",
       "permitCategory": "Sewerage Documentation",
       "priority": "Low",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 97,
@@ -1751,7 +1751,7 @@ export const permitsData: PermitData = {
       "owner": "Mohammed Al Rashid",
       "permitCategory": "Sewerage Modification",
       "priority": "High",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 98,
@@ -1769,7 +1769,7 @@ export const permitsData: PermitData = {
       "owner": "Fatima Al Hosani",
       "permitCategory": "Temporary Connection",
       "priority": "Medium",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 99,
@@ -1787,7 +1787,7 @@ export const permitsData: PermitData = {
       "owner": "Ahmed Al Ketbi",
       "permitCategory": "External Device",
       "priority": "High",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 100,
@@ -1805,7 +1805,7 @@ export const permitsData: PermitData = {
       "owner": "Sara Al Nuaimi",
       "permitCategory": "Sewerage",
       "priority": "Medium",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 101,
@@ -1823,7 +1823,7 @@ export const permitsData: PermitData = {
       "owner": "Khalid Al Shamsi",
       "permitCategory": "Sewerage",
       "priority": "High",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 102,
@@ -1841,7 +1841,7 @@ export const permitsData: PermitData = {
       "owner": "Noura Al Dhaheri",
       "permitCategory": "Sewerage Connection",
       "priority": "Low",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 103,
@@ -1859,7 +1859,7 @@ export const permitsData: PermitData = {
       "owner": "Rashid Al Suwaidi",
       "permitCategory": "Sewerage Documentation",
       "priority": "Medium",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 104,
@@ -1877,7 +1877,7 @@ export const permitsData: PermitData = {
       "owner": "Mariam Al Falasi",
       "permitCategory": "Sewerage Modification",
       "priority": "High",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 105,
@@ -1895,7 +1895,7 @@ export const permitsData: PermitData = {
       "owner": "Hamad Al Mansoori",
       "permitCategory": "Temporary Connection",
       "priority": "Medium",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 106,
@@ -1913,7 +1913,7 @@ export const permitsData: PermitData = {
       "owner": "Layla Al Suwaidi",
       "permitCategory": "External Device",
       "priority": "Low",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 107,
@@ -1931,7 +1931,7 @@ export const permitsData: PermitData = {
       "owner": "Sultan Al Ketbi",
       "permitCategory": "Sewerage",
       "priority": "High",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 108,
@@ -1949,7 +1949,7 @@ export const permitsData: PermitData = {
       "owner": "Hamda Al Hosani",
       "permitCategory": "Sewerage",
       "priority": "Medium",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 109,
@@ -1967,7 +1967,7 @@ export const permitsData: PermitData = {
       "owner": "Mohammed Al Rashid",
       "permitCategory": "Sewerage Connection",
       "priority": "High",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 110,
@@ -1985,7 +1985,7 @@ export const permitsData: PermitData = {
       "owner": "Fatima Al Hosani",
       "permitCategory": "Sewerage Documentation",
       "priority": "Low",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 111,
@@ -2003,7 +2003,7 @@ export const permitsData: PermitData = {
       "owner": "Ahmed Al Ketbi",
       "permitCategory": "Sewerage Modification",
       "priority": "Medium",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 112,
@@ -2021,7 +2021,7 @@ export const permitsData: PermitData = {
       "owner": "Sara Al Nuaimi",
       "permitCategory": "Temporary Connection",
       "priority": "High",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 113,
@@ -2039,7 +2039,7 @@ export const permitsData: PermitData = {
       "owner": "Khalid Al Shamsi",
       "permitCategory": "External Device",
       "priority": "Medium",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 114,
@@ -2057,7 +2057,7 @@ export const permitsData: PermitData = {
       "owner": "Noura Al Dhaheri",
       "permitCategory": "Sewerage",
       "priority": "Low",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 115,
@@ -2075,7 +2075,7 @@ export const permitsData: PermitData = {
       "owner": "Rashid Al Suwaidi",
       "permitCategory": "Sewerage",
       "priority": "High",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 116,
@@ -2093,7 +2093,7 @@ export const permitsData: PermitData = {
       "owner": "Mariam Al Falasi",
       "permitCategory": "Sewerage Connection",
       "priority": "Medium",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 117,
@@ -2111,7 +2111,7 @@ export const permitsData: PermitData = {
       "owner": "Hamad Al Mansoori",
       "permitCategory": "Sewerage Documentation",
       "priority": "Low",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 118,
@@ -2129,7 +2129,7 @@ export const permitsData: PermitData = {
       "owner": "Layla Al Suwaidi",
       "permitCategory": "Sewerage Modification",
       "priority": "High",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 119,
@@ -2147,7 +2147,7 @@ export const permitsData: PermitData = {
       "owner": "Sultan Al Ketbi",
       "permitCategory": "Temporary Connection",
       "priority": "Medium",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 120,
@@ -2165,7 +2165,7 @@ export const permitsData: PermitData = {
       "owner": "Hamda Al Hosani",
       "permitCategory": "External Device",
       "priority": "Low",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 121,
@@ -2183,7 +2183,7 @@ export const permitsData: PermitData = {
       "owner": "Mohammed Al Rashid",
       "permitCategory": "Sewerage",
       "priority": "High",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 122,
@@ -2201,7 +2201,7 @@ export const permitsData: PermitData = {
       "owner": "Fatima Al Hosani",
       "permitCategory": "Sewerage",
       "priority": "Medium",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 123,
@@ -2219,7 +2219,7 @@ export const permitsData: PermitData = {
       "owner": "Ahmed Al Ketbi",
       "permitCategory": "Sewerage Connection",
       "priority": "High",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 124,
@@ -2237,7 +2237,7 @@ export const permitsData: PermitData = {
       "owner": "Sara Al Nuaimi",
       "permitCategory": "Sewerage Documentation",
       "priority": "Low",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 125,
@@ -2255,7 +2255,7 @@ export const permitsData: PermitData = {
       "owner": "Khalid Al Shamsi",
       "permitCategory": "Sewerage Modification",
       "priority": "Medium",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 126,
@@ -2273,7 +2273,7 @@ export const permitsData: PermitData = {
       "owner": "Noura Al Dhaheri",
       "permitCategory": "Temporary Connection",
       "priority": "Low",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 127,
@@ -2291,7 +2291,7 @@ export const permitsData: PermitData = {
       "owner": "Rashid Al Suwaidi",
       "permitCategory": "External Device",
       "priority": "High",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 128,
@@ -2309,7 +2309,7 @@ export const permitsData: PermitData = {
       "owner": "Mariam Al Falasi",
       "permitCategory": "Sewerage",
       "priority": "Medium",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 129,
@@ -2327,7 +2327,7 @@ export const permitsData: PermitData = {
       "owner": "Hamad Al Mansoori",
       "permitCategory": "Sewerage",
       "priority": "High",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 130,
@@ -2345,7 +2345,7 @@ export const permitsData: PermitData = {
       "owner": "Layla Al Suwaidi",
       "permitCategory": "Sewerage Connection",
       "priority": "Low",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 131,
@@ -2363,7 +2363,7 @@ export const permitsData: PermitData = {
       "owner": "Sultan Al Ketbi",
       "permitCategory": "Sewerage Documentation",
       "priority": "Medium",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 132,
@@ -2381,7 +2381,7 @@ export const permitsData: PermitData = {
       "owner": "Hamda Al Hosani",
       "permitCategory": "Sewerage Modification",
       "priority": "High",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 133,
@@ -2399,7 +2399,7 @@ export const permitsData: PermitData = {
       "owner": "Mohammed Al Rashid",
       "permitCategory": "Temporary Connection",
       "priority": "Medium",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 134,
@@ -2417,7 +2417,7 @@ export const permitsData: PermitData = {
       "owner": "Fatima Al Hosani",
       "permitCategory": "External Device",
       "priority": "High",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 135,
@@ -2435,7 +2435,7 @@ export const permitsData: PermitData = {
       "owner": "Ahmed Al Ketbi",
       "permitCategory": "Sewerage",
       "priority": "Low",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 136,
@@ -2453,7 +2453,7 @@ export const permitsData: PermitData = {
       "owner": "Sara Al Nuaimi",
       "permitCategory": "Sewerage",
       "priority": "High",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 137,
@@ -2471,7 +2471,7 @@ export const permitsData: PermitData = {
       "owner": "Khalid Al Shamsi",
       "permitCategory": "Sewerage Connection",
       "priority": "Medium",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 138,
@@ -2489,7 +2489,7 @@ export const permitsData: PermitData = {
       "owner": "Noura Al Dhaheri",
       "permitCategory": "Sewerage Documentation",
       "priority": "Low",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 139,
@@ -2507,7 +2507,7 @@ export const permitsData: PermitData = {
       "owner": "Rashid Al Suwaidi",
       "permitCategory": "Sewerage Modification",
       "priority": "High",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 140,
@@ -2525,7 +2525,7 @@ export const permitsData: PermitData = {
       "owner": "Mariam Al Falasi",
       "permitCategory": "Temporary Connection",
       "priority": "Medium",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 141,
@@ -2543,7 +2543,7 @@ export const permitsData: PermitData = {
       "owner": "Hamad Al Mansoori",
       "permitCategory": "External Device",
       "priority": "Low",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 142,
@@ -2561,7 +2561,7 @@ export const permitsData: PermitData = {
       "owner": "Layla Al Suwaidi",
       "permitCategory": "Sewerage",
       "priority": "High",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 143,
@@ -2579,7 +2579,7 @@ export const permitsData: PermitData = {
       "owner": "Sultan Al Ketbi",
       "permitCategory": "Sewerage",
       "priority": "Medium",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 144,
@@ -2597,7 +2597,7 @@ export const permitsData: PermitData = {
       "owner": "Hamda Al Hosani",
       "permitCategory": "Sewerage Connection",
       "priority": "Low",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 145,
@@ -2615,7 +2615,7 @@ export const permitsData: PermitData = {
       "owner": "Mohammed Al Rashid",
       "permitCategory": "Sewerage Documentation",
       "priority": "High",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 146,
@@ -2633,7 +2633,7 @@ export const permitsData: PermitData = {
       "owner": "Fatima Al Hosani",
       "permitCategory": "Sewerage Modification",
       "priority": "Medium",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 147,
@@ -2651,7 +2651,7 @@ export const permitsData: PermitData = {
       "owner": "Ahmed Al Ketbi",
       "permitCategory": "Temporary Connection",
       "priority": "Low",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 148,
@@ -2669,7 +2669,7 @@ export const permitsData: PermitData = {
       "owner": "Sara Al Nuaimi",
       "permitCategory": "External Device",
       "priority": "High",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 149,
@@ -2687,7 +2687,7 @@ export const permitsData: PermitData = {
       "owner": "Khalid Al Shamsi",
       "permitCategory": "Sewerage",
       "priority": "Medium",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 150,
@@ -2705,7 +2705,7 @@ export const permitsData: PermitData = {
       "owner": "Noura Al Dhaheri",
       "permitCategory": "Sewerage",
       "priority": "Low",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 151,
@@ -2723,7 +2723,7 @@ export const permitsData: PermitData = {
       "owner": "Rashid Al Suwaidi",
       "permitCategory": "Sewerage Connection",
       "priority": "High",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 152,
@@ -2741,7 +2741,7 @@ export const permitsData: PermitData = {
       "owner": "Mariam Al Falasi",
       "permitCategory": "Sewerage Documentation",
       "priority": "Medium",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 153,
@@ -2759,7 +2759,7 @@ export const permitsData: PermitData = {
       "owner": "Hamad Al Mansoori",
       "permitCategory": "Sewerage Modification",
       "priority": "Low",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 154,
@@ -2777,7 +2777,7 @@ export const permitsData: PermitData = {
       "owner": "Layla Al Suwaidi",
       "permitCategory": "Temporary Connection",
       "priority": "High",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 155,
@@ -2795,7 +2795,7 @@ export const permitsData: PermitData = {
       "owner": "Sultan Al Ketbi",
       "permitCategory": "External Device",
       "priority": "Medium",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 156,
@@ -2813,7 +2813,7 @@ export const permitsData: PermitData = {
       "owner": "Hamda Al Hosani",
       "permitCategory": "Sewerage",
       "priority": "Low",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 157,
@@ -2831,7 +2831,7 @@ export const permitsData: PermitData = {
       "owner": "Mohammed Al Rashid",
       "permitCategory": "Sewerage",
       "priority": "High",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 158,
@@ -2849,7 +2849,7 @@ export const permitsData: PermitData = {
       "owner": "Fatima Al Hosani",
       "permitCategory": "Sewerage Connection",
       "priority": "Medium",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 159,
@@ -2867,7 +2867,7 @@ export const permitsData: PermitData = {
       "owner": "Ahmed Al Ketbi",
       "permitCategory": "Sewerage Documentation",
       "priority": "Low",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 160,
@@ -2885,7 +2885,7 @@ export const permitsData: PermitData = {
       "owner": "Sara Al Nuaimi",
       "permitCategory": "Sewerage Modification",
       "priority": "High",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 161,
@@ -2903,7 +2903,7 @@ export const permitsData: PermitData = {
       "owner": "Khalid Al Shamsi",
       "permitCategory": "Temporary Connection",
       "priority": "Medium",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 162,
@@ -2921,7 +2921,7 @@ export const permitsData: PermitData = {
       "owner": "Noura Al Dhaheri",
       "permitCategory": "External Device",
       "priority": "Low",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 163,
@@ -2939,7 +2939,7 @@ export const permitsData: PermitData = {
       "owner": "Rashid Al Suwaidi",
       "permitCategory": "Sewerage",
       "priority": "High",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 164,
@@ -2957,7 +2957,7 @@ export const permitsData: PermitData = {
       "owner": "Mariam Al Falasi",
       "permitCategory": "Sewerage",
       "priority": "Medium",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 165,
@@ -2975,7 +2975,7 @@ export const permitsData: PermitData = {
       "owner": "Hamad Al Mansoori",
       "permitCategory": "Sewerage Connection",
       "priority": "Low",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 166,
@@ -2993,7 +2993,7 @@ export const permitsData: PermitData = {
       "owner": "Layla Al Suwaidi",
       "permitCategory": "Sewerage Documentation",
       "priority": "High",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 167,
@@ -3011,7 +3011,7 @@ export const permitsData: PermitData = {
       "owner": "Sultan Al Ketbi",
       "permitCategory": "Sewerage Modification",
       "priority": "Medium",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 168,
@@ -3029,7 +3029,7 @@ export const permitsData: PermitData = {
       "owner": "Hamda Al Hosani",
       "permitCategory": "Temporary Connection",
       "priority": "Low",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 169,
@@ -3047,7 +3047,7 @@ export const permitsData: PermitData = {
       "owner": "Mohammed Al Rashid",
       "permitCategory": "External Device",
       "priority": "High",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 170,
@@ -3065,7 +3065,7 @@ export const permitsData: PermitData = {
       "owner": "Fatima Al Hosani",
       "permitCategory": "Sewerage",
       "priority": "Medium",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 171,
@@ -3083,7 +3083,7 @@ export const permitsData: PermitData = {
       "owner": "Ahmed Al Ketbi",
       "permitCategory": "Sewerage",
       "priority": "Low",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 172,
@@ -3101,7 +3101,7 @@ export const permitsData: PermitData = {
       "owner": "Sara Al Nuaimi",
       "permitCategory": "Sewerage Connection",
       "priority": "High",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 173,
@@ -3119,7 +3119,7 @@ export const permitsData: PermitData = {
       "owner": "Khalid Al Shamsi",
       "permitCategory": "Sewerage Documentation",
       "priority": "Medium",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 174,
@@ -3137,7 +3137,7 @@ export const permitsData: PermitData = {
       "owner": "Noura Al Dhaheri",
       "permitCategory": "Sewerage Modification",
       "priority": "Low",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 175,
@@ -3155,7 +3155,7 @@ export const permitsData: PermitData = {
       "owner": "Rashid Al Suwaidi",
       "permitCategory": "Temporary Connection",
       "priority": "High",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 176,
@@ -3173,7 +3173,7 @@ export const permitsData: PermitData = {
       "owner": "Mariam Al Falasi",
       "permitCategory": "External Device",
       "priority": "Medium",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 177,
@@ -3191,7 +3191,7 @@ export const permitsData: PermitData = {
       "owner": "Hamad Al Mansoori",
       "permitCategory": "Sewerage",
       "priority": "Low",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 178,
@@ -3209,7 +3209,7 @@ export const permitsData: PermitData = {
       "owner": "Layla Al Suwaidi",
       "permitCategory": "Sewerage",
       "priority": "High",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 179,
@@ -3227,7 +3227,7 @@ export const permitsData: PermitData = {
       "owner": "Sultan Al Ketbi",
       "permitCategory": "Sewerage Connection",
       "priority": "Medium",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 180,
@@ -3245,7 +3245,7 @@ export const permitsData: PermitData = {
       "owner": "Hamda Al Hosani",
       "permitCategory": "Sewerage Documentation",
       "priority": "Low",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 181,
@@ -3263,7 +3263,7 @@ export const permitsData: PermitData = {
       "owner": "Mohammed Al Rashid",
       "permitCategory": "Sewerage Modification",
       "priority": "High",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 182,
@@ -3281,7 +3281,7 @@ export const permitsData: PermitData = {
       "owner": "Fatima Al Hosani",
       "permitCategory": "Temporary Connection",
       "priority": "Medium",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 183,
@@ -3299,7 +3299,7 @@ export const permitsData: PermitData = {
       "owner": "Ahmed Al Ketbi",
       "permitCategory": "External Device",
       "priority": "Low",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 184,
@@ -3317,7 +3317,7 @@ export const permitsData: PermitData = {
       "owner": "Sara Al Nuaimi",
       "permitCategory": "Sewerage",
       "priority": "High",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 185,
@@ -3335,7 +3335,7 @@ export const permitsData: PermitData = {
       "owner": "Khalid Al Shamsi",
       "permitCategory": "Sewerage",
       "priority": "Medium",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 186,
@@ -3353,7 +3353,7 @@ export const permitsData: PermitData = {
       "owner": "Noura Al Dhaheri",
       "permitCategory": "Sewerage Connection",
       "priority": "High",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 187,
@@ -3371,7 +3371,7 @@ export const permitsData: PermitData = {
       "owner": "Rashid Al Suwaidi",
       "permitCategory": "Sewerage Documentation",
       "priority": "Medium",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 188,
@@ -3389,7 +3389,7 @@ export const permitsData: PermitData = {
       "owner": "Mariam Al Falasi",
       "permitCategory": "Sewerage Modification",
       "priority": "Low",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 189,
@@ -3407,7 +3407,7 @@ export const permitsData: PermitData = {
       "owner": "Hamad Al Mansoori",
       "permitCategory": "Temporary Connection",
       "priority": "High",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 190,
@@ -3425,7 +3425,7 @@ export const permitsData: PermitData = {
       "owner": "Layla Al Suwaidi",
       "permitCategory": "External Device",
       "priority": "Medium",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 191,
@@ -3443,7 +3443,7 @@ export const permitsData: PermitData = {
       "owner": "Sultan Al Ketbi",
       "permitCategory": "Sewerage",
       "priority": "Low",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 192,
@@ -3461,7 +3461,7 @@ export const permitsData: PermitData = {
       "owner": "Hamda Al Hosani",
       "permitCategory": "Sewerage",
       "priority": "High",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 193,
@@ -3479,7 +3479,7 @@ export const permitsData: PermitData = {
       "owner": "Mohammed Al Rashid",
       "permitCategory": "Sewerage Connection",
       "priority": "Medium",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 194,
@@ -3497,7 +3497,7 @@ export const permitsData: PermitData = {
       "owner": "Fatima Al Hosani",
       "permitCategory": "Sewerage Documentation",
       "priority": "Low",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 195,
@@ -3515,7 +3515,7 @@ export const permitsData: PermitData = {
       "owner": "Ahmed Al Ketbi",
       "permitCategory": "Sewerage Modification",
       "priority": "High",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 196,
@@ -3533,7 +3533,7 @@ export const permitsData: PermitData = {
       "owner": "Sara Al Nuaimi",
       "permitCategory": "Temporary Connection",
       "priority": "Medium",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 197,
@@ -3551,7 +3551,7 @@ export const permitsData: PermitData = {
       "owner": "Khalid Al Shamsi",
       "permitCategory": "External Device",
       "priority": "Low",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 198,
@@ -3569,7 +3569,7 @@ export const permitsData: PermitData = {
       "owner": "Noura Al Dhaheri",
       "permitCategory": "Sewerage",
       "priority": "High",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 199,
@@ -3587,7 +3587,7 @@ export const permitsData: PermitData = {
       "owner": "Rashid Al Suwaidi",
       "permitCategory": "Sewerage",
       "priority": "Medium",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 200,
@@ -3605,7 +3605,7 @@ export const permitsData: PermitData = {
       "owner": "Mariam Al Falasi",
       "permitCategory": "Sewerage Connection",
       "priority": "Low",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 201,
@@ -3623,7 +3623,7 @@ export const permitsData: PermitData = {
       "owner": "Hamad Al Mansoori",
       "permitCategory": "Sewerage Documentation",
       "priority": "High",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 202,
@@ -3641,7 +3641,7 @@ export const permitsData: PermitData = {
       "owner": "Layla Al Suwaidi",
       "permitCategory": "Sewerage Modification",
       "priority": "Medium",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 203,
@@ -3659,7 +3659,7 @@ export const permitsData: PermitData = {
       "owner": "Sultan Al Ketbi",
       "permitCategory": "Temporary Connection",
       "priority": "Low",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 204,
@@ -3677,7 +3677,7 @@ export const permitsData: PermitData = {
       "owner": "Hamda Al Hosani",
       "permitCategory": "External Device",
       "priority": "High",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 205,
@@ -3695,7 +3695,7 @@ export const permitsData: PermitData = {
       "owner": "Mohammed Al Rashid",
       "permitCategory": "Sewerage",
       "priority": "Medium",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 206,
@@ -3713,7 +3713,7 @@ export const permitsData: PermitData = {
       "owner": "Fatima Al Hosani",
       "permitCategory": "Sewerage",
       "priority": "Low",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 207,
@@ -3731,7 +3731,7 @@ export const permitsData: PermitData = {
       "owner": "Ahmed Al Ketbi",
       "permitCategory": "Sewerage Connection",
       "priority": "High",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 208,
@@ -3749,7 +3749,7 @@ export const permitsData: PermitData = {
       "owner": "Sara Al Nuaimi",
       "permitCategory": "Sewerage Documentation",
       "priority": "Medium",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 209,
@@ -3767,7 +3767,7 @@ export const permitsData: PermitData = {
       "owner": "Khalid Al Shamsi",
       "permitCategory": "Sewerage Modification",
       "priority": "Low",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 210,
@@ -3785,7 +3785,7 @@ export const permitsData: PermitData = {
       "owner": "Noura Al Dhaheri",
       "permitCategory": "Temporary Connection",
       "priority": "High",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 211,
@@ -3803,7 +3803,7 @@ export const permitsData: PermitData = {
       "owner": "Rashid Al Suwaidi",
       "permitCategory": "External Device",
       "priority": "Medium",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 212,
@@ -3821,7 +3821,7 @@ export const permitsData: PermitData = {
       "owner": "Mariam Al Falasi",
       "permitCategory": "Sewerage",
       "priority": "Low",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 213,
@@ -3839,7 +3839,7 @@ export const permitsData: PermitData = {
       "owner": "Hamad Al Mansoori",
       "permitCategory": "Sewerage",
       "priority": "High",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 214,
@@ -3857,7 +3857,7 @@ export const permitsData: PermitData = {
       "owner": "Layla Al Suwaidi",
       "permitCategory": "Sewerage Connection",
       "priority": "Medium",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 215,
@@ -3875,7 +3875,7 @@ export const permitsData: PermitData = {
       "owner": "Sultan Al Ketbi",
       "permitCategory": "Sewerage Documentation",
       "priority": "Low",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 216,
@@ -3893,7 +3893,7 @@ export const permitsData: PermitData = {
       "owner": "Hamda Al Hosani",
       "permitCategory": "Sewerage Modification",
       "priority": "High",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 217,
@@ -3911,7 +3911,7 @@ export const permitsData: PermitData = {
       "owner": "Mohammed Al Rashid",
       "permitCategory": "Temporary Connection",
       "priority": "Medium",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 218,
@@ -3929,7 +3929,7 @@ export const permitsData: PermitData = {
       "owner": "Fatima Al Hosani",
       "permitCategory": "External Device",
       "priority": "Low",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 219,
@@ -3947,7 +3947,7 @@ export const permitsData: PermitData = {
       "owner": "Ahmed Al Ketbi",
       "permitCategory": "Sewerage",
       "priority": "High",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 220,
@@ -3965,7 +3965,7 @@ export const permitsData: PermitData = {
       "owner": "Sara Al Nuaimi",
       "permitCategory": "Sewerage",
       "priority": "Medium",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 221,
@@ -3983,7 +3983,7 @@ export const permitsData: PermitData = {
       "owner": "Khalid Al Shamsi",
       "permitCategory": "Sewerage Connection",
       "priority": "Low",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 222,
@@ -4001,7 +4001,7 @@ export const permitsData: PermitData = {
       "owner": "Noura Al Dhaheri",
       "permitCategory": "Sewerage Documentation",
       "priority": "High",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 223,
@@ -4019,7 +4019,7 @@ export const permitsData: PermitData = {
       "owner": "Rashid Al Suwaidi",
       "permitCategory": "Sewerage Modification",
       "priority": "Medium",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 224,
@@ -4037,7 +4037,7 @@ export const permitsData: PermitData = {
       "owner": "Mariam Al Falasi",
       "permitCategory": "Temporary Connection",
       "priority": "Low",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 225,
@@ -4055,7 +4055,7 @@ export const permitsData: PermitData = {
       "owner": "Hamad Al Mansoori",
       "permitCategory": "External Device",
       "priority": "High",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 226,
@@ -4073,7 +4073,7 @@ export const permitsData: PermitData = {
       "owner": "Layla Al Suwaidi",
       "permitCategory": "Sewerage",
       "priority": "Medium",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 227,
@@ -4091,7 +4091,7 @@ export const permitsData: PermitData = {
       "owner": "Sultan Al Ketbi",
       "permitCategory": "Sewerage",
       "priority": "Low",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 228,
@@ -4109,7 +4109,7 @@ export const permitsData: PermitData = {
       "owner": "Hamda Al Hosani",
       "permitCategory": "Sewerage Connection",
       "priority": "High",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 229,
@@ -4127,7 +4127,7 @@ export const permitsData: PermitData = {
       "owner": "Mohammed Al Rashid",
       "permitCategory": "Sewerage Documentation",
       "priority": "Medium",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 230,
@@ -4145,7 +4145,7 @@ export const permitsData: PermitData = {
       "owner": "Fatima Al Hosani",
       "permitCategory": "Sewerage Modification",
       "priority": "Low",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 231,
@@ -4163,7 +4163,7 @@ export const permitsData: PermitData = {
       "owner": "Ahmed Al Ketbi",
       "permitCategory": "Temporary Connection",
       "priority": "High",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 232,
@@ -4181,7 +4181,7 @@ export const permitsData: PermitData = {
       "owner": "Sara Al Nuaimi",
       "permitCategory": "External Device",
       "priority": "Medium",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 233,
@@ -4199,7 +4199,7 @@ export const permitsData: PermitData = {
       "owner": "Khalid Al Shamsi",
       "permitCategory": "Sewerage",
       "priority": "Low",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 234,
@@ -4217,7 +4217,7 @@ export const permitsData: PermitData = {
       "owner": "Noura Al Dhaheri",
       "permitCategory": "Sewerage",
       "priority": "High",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 235,
@@ -4235,7 +4235,7 @@ export const permitsData: PermitData = {
       "owner": "Rashid Al Suwaidi",
       "permitCategory": "Sewerage Connection",
       "priority": "Medium",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 236,
@@ -4253,7 +4253,7 @@ export const permitsData: PermitData = {
       "owner": "Mariam Al Falasi",
       "permitCategory": "Sewerage Documentation",
       "priority": "Low",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 237,
@@ -4271,7 +4271,7 @@ export const permitsData: PermitData = {
       "owner": "Hamad Al Mansoori",
       "permitCategory": "Sewerage Modification",
       "priority": "High",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 238,
@@ -4289,7 +4289,7 @@ export const permitsData: PermitData = {
       "owner": "Layla Al Suwaidi",
       "permitCategory": "Temporary Connection",
       "priority": "Medium",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 239,
@@ -4307,7 +4307,7 @@ export const permitsData: PermitData = {
       "owner": "Sultan Al Ketbi",
       "permitCategory": "External Device",
       "priority": "Low",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 240,
@@ -4325,7 +4325,7 @@ export const permitsData: PermitData = {
       "owner": "Hamda Al Hosani",
       "permitCategory": "Sewerage",
       "priority": "High",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 241,
@@ -4343,7 +4343,7 @@ export const permitsData: PermitData = {
       "owner": "Mohammed Al Rashid",
       "permitCategory": "Sewerage",
       "priority": "Medium",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 242,
@@ -4361,7 +4361,7 @@ export const permitsData: PermitData = {
       "owner": "Fatima Al Hosani",
       "permitCategory": "Sewerage Connection",
       "priority": "Low",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 243,
@@ -4379,7 +4379,7 @@ export const permitsData: PermitData = {
       "owner": "Ahmed Al Ketbi",
       "permitCategory": "Sewerage Documentation",
       "priority": "High",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 244,
@@ -4397,7 +4397,7 @@ export const permitsData: PermitData = {
       "owner": "Sara Al Nuaimi",
       "permitCategory": "Sewerage Modification",
       "priority": "Medium",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 245,
@@ -4415,7 +4415,7 @@ export const permitsData: PermitData = {
       "owner": "Khalid Al Shamsi",
       "permitCategory": "Temporary Connection",
       "priority": "Low",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 246,
@@ -4433,7 +4433,7 @@ export const permitsData: PermitData = {
       "owner": "Noura Al Dhaheri",
       "permitCategory": "External Device",
       "priority": "High",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 247,
@@ -4451,7 +4451,7 @@ export const permitsData: PermitData = {
       "owner": "Rashid Al Suwaidi",
       "permitCategory": "Sewerage",
       "priority": "Medium",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 248,
@@ -4469,7 +4469,7 @@ export const permitsData: PermitData = {
       "owner": "Mariam Al Falasi",
       "permitCategory": "Sewerage",
       "priority": "Low",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 249,
@@ -4487,7 +4487,7 @@ export const permitsData: PermitData = {
       "owner": "Hamad Al Mansoori",
       "permitCategory": "Sewerage Connection",
       "priority": "High",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 250,
@@ -4505,7 +4505,7 @@ export const permitsData: PermitData = {
       "owner": "Layla Al Suwaidi",
       "permitCategory": "Sewerage Documentation",
       "priority": "Medium",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 251,
@@ -4523,7 +4523,7 @@ export const permitsData: PermitData = {
       "owner": "Sultan Al Ketbi",
       "permitCategory": "Sewerage Modification",
       "priority": "Low",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 252,
@@ -4541,7 +4541,7 @@ export const permitsData: PermitData = {
       "owner": "Hamda Al Hosani",
       "permitCategory": "Temporary Connection",
       "priority": "High",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 253,
@@ -4559,7 +4559,7 @@ export const permitsData: PermitData = {
       "owner": "Mohammed Al Rashid",
       "permitCategory": "External Device",
       "priority": "Medium",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 254,
@@ -4577,7 +4577,7 @@ export const permitsData: PermitData = {
       "owner": "Fatima Al Hosani",
       "permitCategory": "Sewerage",
       "priority": "Low",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 255,
@@ -4595,7 +4595,7 @@ export const permitsData: PermitData = {
       "owner": "Ahmed Al Ketbi",
       "permitCategory": "Sewerage",
       "priority": "High",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 256,
@@ -4613,7 +4613,7 @@ export const permitsData: PermitData = {
       "owner": "Sara Al Nuaimi",
       "permitCategory": "Sewerage Connection",
       "priority": "Medium",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 257,
@@ -4631,7 +4631,7 @@ export const permitsData: PermitData = {
       "owner": "Khalid Al Shamsi",
       "permitCategory": "Sewerage Documentation",
       "priority": "Low",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 258,
@@ -4649,7 +4649,7 @@ export const permitsData: PermitData = {
       "owner": "Noura Al Dhaheri",
       "permitCategory": "Sewerage Modification",
       "priority": "High",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 259,
@@ -4667,7 +4667,7 @@ export const permitsData: PermitData = {
       "owner": "Rashid Al Suwaidi",
       "permitCategory": "Temporary Connection",
       "priority": "Medium",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 260,
@@ -4685,7 +4685,7 @@ export const permitsData: PermitData = {
       "owner": "Mariam Al Falasi",
       "permitCategory": "External Device",
       "priority": "Low",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 261,
@@ -4703,7 +4703,7 @@ export const permitsData: PermitData = {
       "owner": "Hamad Al Mansoori",
       "permitCategory": "Sewerage",
       "priority": "High",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 262,
@@ -4721,7 +4721,7 @@ export const permitsData: PermitData = {
       "owner": "Layla Al Suwaidi",
       "permitCategory": "Sewerage",
       "priority": "Medium",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 263,
@@ -4739,7 +4739,7 @@ export const permitsData: PermitData = {
       "owner": "Sultan Al Ketbi",
       "permitCategory": "Sewerage Connection",
       "priority": "Low",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 264,
@@ -4757,7 +4757,7 @@ export const permitsData: PermitData = {
       "owner": "Hamda Al Hosani",
       "permitCategory": "Sewerage Documentation",
       "priority": "High",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 265,
@@ -4775,7 +4775,7 @@ export const permitsData: PermitData = {
       "owner": "Mohammed Al Rashid",
       "permitCategory": "Sewerage Modification",
       "priority": "Medium",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 266,
@@ -4793,7 +4793,7 @@ export const permitsData: PermitData = {
       "owner": "Fatima Al Hosani",
       "permitCategory": "Temporary Connection",
       "priority": "Low",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 267,
@@ -4811,7 +4811,7 @@ export const permitsData: PermitData = {
       "owner": "Ahmed Al Ketbi",
       "permitCategory": "External Device",
       "priority": "High",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 268,
@@ -4829,7 +4829,7 @@ export const permitsData: PermitData = {
       "owner": "Sara Al Nuaimi",
       "permitCategory": "Sewerage",
       "priority": "Medium",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 269,
@@ -4847,7 +4847,7 @@ export const permitsData: PermitData = {
       "owner": "Khalid Al Shamsi",
       "permitCategory": "Sewerage",
       "priority": "Low",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 270,
@@ -4865,7 +4865,7 @@ export const permitsData: PermitData = {
       "owner": "Noura Al Dhaheri",
       "permitCategory": "Sewerage Connection",
       "priority": "High",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 271,
@@ -4883,7 +4883,7 @@ export const permitsData: PermitData = {
       "owner": "Rashid Al Suwaidi",
       "permitCategory": "Sewerage Documentation",
       "priority": "Medium",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 272,
@@ -4901,7 +4901,7 @@ export const permitsData: PermitData = {
       "owner": "Mariam Al Falasi",
       "permitCategory": "Sewerage Modification",
       "priority": "Low",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 273,
@@ -4919,7 +4919,7 @@ export const permitsData: PermitData = {
       "owner": "Hamad Al Mansoori",
       "permitCategory": "Temporary Connection",
       "priority": "High",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 274,
@@ -4937,7 +4937,7 @@ export const permitsData: PermitData = {
       "owner": "Layla Al Suwaidi",
       "permitCategory": "External Device",
       "priority": "Medium",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 275,
@@ -4955,7 +4955,7 @@ export const permitsData: PermitData = {
       "owner": "Sultan Al Ketbi",
       "permitCategory": "Sewerage",
       "priority": "Low",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 276,
@@ -4973,7 +4973,7 @@ export const permitsData: PermitData = {
       "owner": "Hamda Al Hosani",
       "permitCategory": "Sewerage",
       "priority": "High",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 277,
@@ -4991,7 +4991,7 @@ export const permitsData: PermitData = {
       "owner": "Mohammed Al Rashid",
       "permitCategory": "Sewerage Connection",
       "priority": "Medium",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 278,
@@ -5009,7 +5009,7 @@ export const permitsData: PermitData = {
       "owner": "Fatima Al Hosani",
       "permitCategory": "Sewerage Documentation",
       "priority": "Low",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 279,
@@ -5027,7 +5027,7 @@ export const permitsData: PermitData = {
       "owner": "Ahmed Al Ketbi",
       "permitCategory": "Sewerage Modification",
       "priority": "High",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 280,
@@ -5045,7 +5045,7 @@ export const permitsData: PermitData = {
       "owner": "Sara Al Nuaimi",
       "permitCategory": "Temporary Connection",
       "priority": "Medium",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 281,
@@ -5063,7 +5063,7 @@ export const permitsData: PermitData = {
       "owner": "Khalid Al Shamsi",
       "permitCategory": "External Device",
       "priority": "Low",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 282,
@@ -5081,7 +5081,7 @@ export const permitsData: PermitData = {
       "owner": "Noura Al Dhaheri",
       "permitCategory": "Sewerage",
       "priority": "High",
-      "zone": "Zone A"
+      "zone": "Abu Dhabi"
     },
     {
       "id": 283,
@@ -5099,7 +5099,7 @@ export const permitsData: PermitData = {
       "owner": "Rashid Al Suwaidi",
       "permitCategory": "Sewerage",
       "priority": "Medium",
-      "zone": "Zone B"
+      "zone": "Al Ain"
     },
     {
       "id": 284,
@@ -5117,7 +5117,7 @@ export const permitsData: PermitData = {
       "owner": "Mariam Al Falasi",
       "permitCategory": "Sewerage Connection",
       "priority": "Low",
-      "zone": "Zone C"
+      "zone": "Al Dhafrah"
     },
     {
       "id": 285,
@@ -5135,7 +5135,7 @@ export const permitsData: PermitData = {
       "owner": "Hamad Al Mansoori",
       "permitCategory": "Sewerage Documentation",
       "priority": "High",
-      "zone": "Zone D"
+      "zone": "Abu Dhabi"
     }
   ],
   "lookups": {
