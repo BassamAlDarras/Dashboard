@@ -9,7 +9,11 @@ import {
   FileText,
   ClipboardCheck,
   PanelLeftClose,
-  PanelLeft
+  PanelLeft,
+  BarChart3,
+  Settings2,
+  TrendingUp,
+  Wrench
 } from 'lucide-react';
 import { useDashboard } from '@/context/DashboardContext';
 import { useInspection } from '@/context/InspectionContext';
@@ -18,19 +22,24 @@ import Filters from '@/components/dashboard/Filters';
 import Breadcrumb from '@/components/dashboard/Breadcrumb';
 import PermitModal from '@/components/dashboard/PermitModal';
 import DrillDownView from '@/components/dashboard/DrillDownView';
+import ExecutiveView from '@/components/dashboard/ExecutiveView';
+import OperationsView from '@/components/dashboard/OperationsView';
 import InspectionKPICards from '@/components/inspections/InspectionKPICards';
 import InspectionFilters from '@/components/inspections/InspectionFilters';
 import InspectionBreadcrumb from '@/components/inspections/InspectionBreadcrumb';
 import InspectionDrillDownView from '@/components/inspections/InspectionDrillDownView';
 import InspectionModal from '@/components/inspections/InspectionModal';
+import InspectionExecutiveView from '@/components/inspections/InspectionExecutiveView';
 
 type DashboardTab = 'permits' | 'inspections';
+type SubTab = 'executive' | 'operations';
 
 export default function DashboardPage() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [showFilters, setShowFilters] = useState(true);
   const [filterPanelCollapsed, setFilterPanelCollapsed] = useState(false);
   const [activeTab, setActiveTab] = useState<DashboardTab>('permits');
+  const [activeSubTab, setActiveSubTab] = useState<SubTab>('executive');
   
   const { 
     drillDown: permitDrillDown, 
@@ -71,9 +80,10 @@ export default function DashboardPage() {
       {/* Main Content */}
       <main className="px-4 lg:px-8 py-4 space-y-4">
         {/* Compact Header Bar */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between flex-wrap gap-4">
           {/* Tab Navigation */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 flex-wrap">
+            {/* Main Tabs */}
             <div className="flex items-center bg-white dark:bg-slate-800 rounded-xl p-1 shadow-sm border border-gray-200 dark:border-slate-700">
               <button
                 onClick={() => setActiveTab('permits')}
@@ -98,6 +108,36 @@ export default function DashboardPage() {
                 Inspections
               </button>
             </div>
+
+            {/* Sub-Tabs (Executive / Operations) */}
+            <div className="flex items-center bg-gray-100 dark:bg-slate-700/50 rounded-xl p-1 border border-gray-200/50 dark:border-slate-600/50">
+              <button
+                onClick={() => setActiveSubTab('executive')}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                  activeSubTab === 'executive'
+                    ? activeTab === 'permits' 
+                      ? 'bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-lg shadow-indigo-500/25'
+                      : 'bg-gradient-to-r from-teal-500 to-emerald-600 text-white shadow-lg shadow-teal-500/25'
+                    : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white/50 dark:hover:bg-slate-600/50'
+                }`}
+              >
+                <TrendingUp className="w-4 h-4" />
+                Executive
+              </button>
+              <button
+                onClick={() => setActiveSubTab('operations')}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                  activeSubTab === 'operations'
+                    ? activeTab === 'permits'
+                      ? 'bg-gradient-to-r from-blue-500 to-cyan-600 text-white shadow-lg shadow-blue-500/25'
+                      : 'bg-gradient-to-r from-green-500 to-teal-600 text-white shadow-lg shadow-green-500/25'
+                    : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white/50 dark:hover:bg-slate-600/50'
+                }`}
+              >
+                <Wrench className="w-4 h-4" />
+                Operations
+              </button>
+            </div>
             
             {/* Count Badge */}
             <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-white dark:bg-slate-800 rounded-lg border border-gray-200 dark:border-slate-700">
@@ -109,17 +149,19 @@ export default function DashboardPage() {
 
           {/* Action Buttons */}
           <div className="flex items-center gap-2">
-            <button 
-              onClick={() => setFilterPanelCollapsed(!filterPanelCollapsed)}
-              className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all border ${
-                filterPanelCollapsed 
-                  ? 'bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-700'
-                  : 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400 border-blue-200 dark:border-blue-800'
-              }`}
-            >
-              {filterPanelCollapsed ? <PanelLeft className="w-4 h-4" /> : <PanelLeftClose className="w-4 h-4" />}
-              <span className="hidden sm:inline">{filterPanelCollapsed ? 'Filters' : 'Hide'}</span>
-            </button>
+            {activeSubTab === 'operations' && (
+              <button 
+                onClick={() => setFilterPanelCollapsed(!filterPanelCollapsed)}
+                className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all border ${
+                  filterPanelCollapsed 
+                    ? 'bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-700'
+                    : 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400 border-blue-200 dark:border-blue-800'
+                }`}
+              >
+                {filterPanelCollapsed ? <PanelLeft className="w-4 h-4" /> : <PanelLeftClose className="w-4 h-4" />}
+                <span className="hidden sm:inline">{filterPanelCollapsed ? 'Filters' : 'Hide'}</span>
+              </button>
+            )}
             
             <button
               onClick={handleRefresh}
@@ -146,58 +188,67 @@ export default function DashboardPage() {
 
         {/* Permits Tab Content */}
         {activeTab === 'permits' && (
-          <div className="flex gap-6">
-            {/* Left Filter Panel */}
-            <div 
-              className={`transition-all duration-300 ease-in-out flex-shrink-0 ${
-                filterPanelCollapsed ? 'w-0 overflow-hidden opacity-0' : 'w-72 opacity-100'
-              }`}
-            >
-              <div className="sticky top-24">
-                <Filters isVertical />
+          <>
+            {activeSubTab === 'executive' ? (
+              /* Executive View - Full Width */
+              <ExecutiveView />
+            ) : (
+              /* Operations View - Reimagined Work Queue */
+              <div className="flex gap-6">
+                {/* Left Filter Panel */}
+                <div 
+                  className={`transition-all duration-300 ease-in-out flex-shrink-0 ${
+                    filterPanelCollapsed ? 'w-0 overflow-hidden opacity-0' : 'w-72 opacity-100'
+                  }`}
+                >
+                  <div className="sticky top-24">
+                    <Filters isVertical />
+                  </div>
+                </div>
+
+                {/* Main Content Area */}
+                <div className="flex-1 min-w-0">
+                  <OperationsView />
+                </div>
               </div>
-            </div>
-
-            {/* Main Content Area */}
-            <div className="flex-1 min-w-0 space-y-6">
-              {/* Breadcrumb Navigation */}
-              <Breadcrumb />
-
-              {/* KPI Cards */}
-              <KPICards />
-
-              {/* Drill-Down View */}
-              <DrillDownView />
-            </div>
-          </div>
+            )}
+          </>
         )}
 
         {/* Inspections Tab Content */}
         {activeTab === 'inspections' && (
-          <div className="flex gap-6">
-            {/* Left Filter Panel */}
-            <div 
-              className={`transition-all duration-300 ease-in-out flex-shrink-0 ${
-                filterPanelCollapsed ? 'w-0 overflow-hidden opacity-0' : 'w-72 opacity-100'
-              }`}
-            >
-              <div className="sticky top-24">
-                <InspectionFilters isVertical />
+          <>
+            {activeSubTab === 'executive' ? (
+              /* Executive View - Full Width */
+              <InspectionExecutiveView />
+            ) : (
+              /* Operations View with Filters */
+              <div className="flex gap-6">
+                {/* Left Filter Panel */}
+                <div 
+                  className={`transition-all duration-300 ease-in-out flex-shrink-0 ${
+                    filterPanelCollapsed ? 'w-0 overflow-hidden opacity-0' : 'w-72 opacity-100'
+                  }`}
+                >
+                  <div className="sticky top-24">
+                    <InspectionFilters isVertical />
+                  </div>
+                </div>
+
+                {/* Main Content Area */}
+                <div className="flex-1 min-w-0 space-y-6">
+                  {/* Breadcrumb Navigation */}
+                  <InspectionBreadcrumb />
+
+                  {/* KPI Cards */}
+                  <InspectionKPICards />
+
+                  {/* Drill-Down View */}
+                  <InspectionDrillDownView />
+                </div>
               </div>
-            </div>
-
-            {/* Main Content Area */}
-            <div className="flex-1 min-w-0 space-y-6">
-              {/* Breadcrumb Navigation */}
-              <InspectionBreadcrumb />
-
-              {/* KPI Cards */}
-              <InspectionKPICards />
-
-              {/* Drill-Down View */}
-              <InspectionDrillDownView />
-            </div>
-          </div>
+            )}
+          </>
         )}
       </main>
 
